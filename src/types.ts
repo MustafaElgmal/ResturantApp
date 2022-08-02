@@ -37,7 +37,11 @@ export interface orderType{
 }
 export interface orderActionType{
     type:string,
-    payload:orderType
+    payload:orderType[]
+}
+
+export interface orderStateType{
+    order:orderType[]
 }
 export interface userType{
     id?:number
@@ -57,7 +61,7 @@ export interface userActionType{
     }
 }
 
-export interface stateType{
+export interface userStateType{
     user: {
         user: userType,
         isLoggedIn: boolean

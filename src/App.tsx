@@ -8,12 +8,12 @@ import OrderSuccess from "./pages/OrderSuccess";
 import { Routes, Route } from "react-router-dom";
 import DashBord from "./pages/DashBord";
 import SignUp from "./pages/SignUp";
-import { stateType } from "./types";
+import { userStateType } from "./types";
 import { useSelector } from "react-redux";
 import Protected from "./components/Protected";
 
 function App() {
-  const user = useSelector((state: stateType) => state.user);
+  const user = useSelector((state: userStateType) => state.user);
 
   return (
     <div>

@@ -7,14 +7,14 @@ import CheckOutModal from "./CheckOutModal";
 import * as Scroll from "react-scroll";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/actions/user.action";
-import { stateType } from "../types";
+import { userStateType } from "../types";
 import { getStateCategory } from "../redux/actions/stateCategory";
 
 const Header = () => {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state: stateType) => state.user);
+  const user = useSelector((state: userStateType) => state.user);
   const logoutUser = () => {
     dispatch(logout());
     localStorage.removeItem("user");

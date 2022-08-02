@@ -2,8 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import CheckOutModalItem from "../components/checkOutModalItem";
 import { Link } from "react-router-dom";
+import { useFormik } from "formik";
+import { useSelector } from "react-redux";
+import { userStateType } from "../types";
 
 const CheckOut = () => {
+  const user=useSelector((state:userStateType)=>state.user)
   const [items, setItems] = useState([
     {
       id: 7,
@@ -36,6 +40,7 @@ const CheckOut = () => {
     items.forEach((item) => (sum += item.price));
     setTotal(sum);
   }, [items]);
+ 
   return (
     <div className="d-flex justify-content-between min-vh-100 mt-5">
       <Container className="card-body p-md-5 ms-5">
