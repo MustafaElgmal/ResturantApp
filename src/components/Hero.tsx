@@ -6,8 +6,12 @@ const Hero = () => {
   return (
     <section
       className="d-flex justify-content-center align-items-center gap-2"
-      style={{ backgroundColor: "#303030", height: "400px", marginTop: "4rem" ,width:'100%'}}
-      >
+      style={{
+        backgroundColor: "#303030",
+        height: "400px",
+        marginTop: "4rem",
+      }}
+    >
       <div
         style={{ color: "#FFFFFF", lineHeight: "20px" }}
         className="fs-1 fw-bold"

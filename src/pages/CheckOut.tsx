@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Container } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import CheckOutModalItem from "../components/checkOutModalItem";
 import { Link } from "react-router-dom";
 
@@ -50,7 +50,7 @@ const CheckOut = () => {
                     className="form-control"
                     name="name"
                     placeholder="Name"
-                    style={{border:'none',borderBottom:'1px solid gray'}}
+                    style={{ border: "none", borderBottom: "1px solid gray" }}
                   />
                 </div>
               </div>
@@ -62,7 +62,7 @@ const CheckOut = () => {
                     className="form-control"
                     name="mobile"
                     placeholder="Mobile"
-                    style={{border:'none',borderBottom:'1px solid gray'}}
+                    style={{ border: "none", borderBottom: "1px solid gray" }}
                   />
                 </div>
               </div>
@@ -74,7 +74,7 @@ const CheckOut = () => {
                     className="form-control"
                     name="address"
                     placeholder="Adress"
-                    style={{border:'none',borderBottom:'1px solid gray'}}
+                    style={{ border: "none", borderBottom: "1px solid gray" }}
                   />
                 </div>
               </div>
@@ -86,13 +86,17 @@ const CheckOut = () => {
                     className="form-control"
                     name="city"
                     placeholder="City"
-                    style={{border:'none',borderBottom:'1px solid gray'}}
+                    style={{ border: "none", borderBottom: "1px solid gray" }}
                   />
                 </div>
               </div>
               <div className=" d-flex gap-2">
-                <Link to='/orderSuccess' className="btn btn-danger" >Order Now</Link>
-                <Link to='/' className="btn btn-light" >Cancel</Link>
+                <Link to="/orderSuccess" className="btn btn-danger">
+                  Order Now
+                </Link>
+                <Link to="/" className="btn btn-light">
+                  Cancel
+                </Link>
               </div>
             </form>
           </div>

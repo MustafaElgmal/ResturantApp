@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { AppProps } from "../types";
 import CheckOutModalItem from "./checkOutModalItem";
@@ -11,15 +11,13 @@ const CheckOutModal = ({ show, onHide, item }: AppProps) => {
       name: "Seafood",
       description: "Shrimpo squid paper",
       price: 120,
-      type: "drink",
-      popular: true,
+      popular: true
     },
     {
       id: 8,
       name: "Seafood",
       description: "Shrimpo squid paper",
       price: 120,
-      type: "drink",
       popular: true,
     },
     {
@@ -27,7 +25,6 @@ const CheckOutModal = ({ show, onHide, item }: AppProps) => {
       name: "Seafood",
       description: "Shrimpo squid paper",
       price: 120,
-      type: "drink",
       popular: true,
     },
   ]);
@@ -47,7 +44,7 @@ const CheckOutModal = ({ show, onHide, item }: AppProps) => {
       aria-labelledby="example-modal-sizes-title-sm"
       style={{ marginLeft: "37%", marginTop: "3%" }}
       scrollable={true}
-      className='min-vh-100'
+      className="min-vh-100"
     >
       <Modal.Body>
         {items.map((item) => (
@@ -64,6 +61,7 @@ const CheckOutModal = ({ show, onHide, item }: AppProps) => {
             onClick={() => {
               onHide && onHide();
             }}
+            style={{ backgroundColor: "#FF9200", borderColor: "#FF9200" }}
           >
             CheckOut
           </Link>

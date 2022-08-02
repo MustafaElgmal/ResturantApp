@@ -1,97 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Container, Row } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import Buttons from "../components/Buttons";
 import Hero from "../components/Hero";
 import Item from "../components/Item";
+import { getAllItems } from "../redux/actions/item";
+import { itemStateType } from "../types";
+import { getItems } from "../utils/apis";
+import { itemFilter } from "../utils/functions";
 
 const Home = () => {
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      name: "Seafood",
-      description: "Shrimpo squid paper",
-      price: 120,
-      type: "piza",
-      popular: true,
-    },
-    {
-      id: 2,
-      name: "Seafood",
-      description: "Shrimpo squid paper",
-      price: 120,
-      type: "piza",
-      popular: true,
-    },
-    {
-      id: 3,
-      name: "Seafood",
-      description: "Shrimpo squid paper",
-      price: 120,
-      type: "piza",
-      popular: true,
-    },
-    {
-      id: 4,
-      name: "Seafood",
-      description: "Shrimpo squid paper",
-      price: 120,
-      type: "burger",
-      popular: true,
-    },
-    {
-      id: 5,
-      name: "Seafood",
-      description: "Shrimpo squid paper",
-      price: 120,
-      type: "burger",
-      popular: true,
-    },
-    {
-      id: 6,
-      name: "Seafood",
-      description: "Shrimpo squid paper",
-      price: 120,
-      type: "drink",
-      popular: true,
-    },
-    {
-      id: 7,
-      name: "Seafood",
-      description: "Shrimpo squid paper",
-      price: 120,
-      type: "drink",
-      popular: true,
-    },
-    {
-      id: 8,
-      name: "Seafood",
-      description: "Shrimpo squid paper",
-      price: 120,
-      type: "drink",
-      popular: true,
-    },
-    {
-      id: 9,
-      name: "Seafood",
-      description: "Shrimpo squid paper",
-      price: 120,
-      type: "drink",
-      popular: true,
-    },
-    
-  ]);
+  let items=useSelector((state:itemStateType)=>state.item)
+  const stateCategory=useSelector((state:{stateCategory:string})=>state.stateCategory)
+  items=itemFilter(items,stateCategory)
+  const dispatch=useDispatch()
+  const updateItems=async()=>{
+    const res=await getItems()
+    dispatch(getAllItems(res?.data.items))
+  }
+  useEffect(()=>{
+    updateItems()
+  },[])
   return (
     <section className="min-vh-100">
       <Hero />
-      <Buttons/>
-      <div className="d-flex justify-content-center">
-      <div className="flex-wrap d-flex">
-        {items.map((item) => (
-          <Item key={item.id} item={item} />
-        ))}
-      </div>
-
-      </div>
-      
+      <Buttons />
+      <Container className='mt-5'>
+        <Row xs={1} md={2} lg={3} className='g-2'>
+          {items.map((item) => (
+            <Item key={item.id} item={item} />
+          ))}
+        </Row>
+      </Container>
     </section>
   );
 };

@@ -4,16 +4,26 @@ import "./index.css";
 import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/font-awesome/css/font-awesome.min.css";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useLocation } from "react-router-dom";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import { reducers } from "./redux/reducers";
+import Wrapper from "./components/Wrapper";
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+const store = createStore(reducers);
 root.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <React.StrictMode>
+        <Wrapper>
+          <App />
+        </Wrapper>
+      </React.StrictMode>
     </BrowserRouter>
-  </React.StrictMode>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
