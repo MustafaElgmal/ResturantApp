@@ -25,7 +25,7 @@ const Item = ({ item }: AppProps) => {
     <Col>
       <Row>
         <Col xs={5}>
-          <Image src={pizza} width="100%" />
+          <Image src={item?.imgUrl} width="100%" />
         </Col>
         <Col xs={7} className="m0 mt-4">
           <h4>{name}</h4>

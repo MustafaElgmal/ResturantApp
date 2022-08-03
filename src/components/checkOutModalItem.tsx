@@ -34,7 +34,7 @@ const CheckOutModalItem = ({ orderInCart }:AppProps) => {
   return (
     <div className="mb-4">
       <Container className="d-flex justify-content-center align-items-center gap-2">
-        <Image src={pizza} style={{ width: "70px" }} />
+        <Image src={orderInCart?.imgUrl} style={{ width: "70px" }} />
         <div className="m0">
           <p>{name}</p>
           <div className='d-flex justfiy-content-between gap-3'>
