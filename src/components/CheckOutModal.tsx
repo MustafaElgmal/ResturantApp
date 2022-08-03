@@ -1,39 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { AppProps } from "../types";
-import CheckOutModalItem from "./checkOutModalItem";
+import { AppProps, cartStateType } from "../types";
+import { mult } from "../utils/functions";
+import CheckOutModalItem from "./CheckOutModalItem";
 
-const CheckOutModal = ({ show, onHide, item }: AppProps) => {
-  const [items, setItems] = useState([
-    {
-      id: 7,
-      name: "Seafood",
-      description: "Shrimpo squid paper",
-      price: 120,
-      popular: true
-    },
-    {
-      id: 8,
-      name: "Seafood",
-      description: "Shrimpo squid paper",
-      price: 120,
-      popular: true,
-    },
-    {
-      id: 9,
-      name: "Seafood",
-      description: "Shrimpo squid paper",
-      price: 120,
-      popular: true,
-    },
-  ]);
+const CheckOutModal = ({ show, onHide }: AppProps) => {
+  const ordersInCart=useSelector((state:cartStateType)=>state.cart)
+ 
   let [total, setTotal] = useState(0);
-  useEffect(() => {
+  
+  const setTotalMoneyOfCart=()=>{
     let sum = 0;
-    items.forEach((item) => (sum += item.price));
+    ordersInCart.forEach((order) => (sum +=mult(order.Qty,order.price)));
     setTotal(sum);
-  }, [items]);
+  }
+  useEffect(() => {
+    setTotalMoneyOfCart()
+  }, [ordersInCart]);
   return (
     <Modal
       size="sm"
@@ -47,8 +32,8 @@ const CheckOutModal = ({ show, onHide, item }: AppProps) => {
       className="min-vh-100"
     >
       <Modal.Body>
-        {items.map((item) => (
-          <CheckOutModalItem key={item.id} item={item} />
+        {ordersInCart.map((order) => (
+          <CheckOutModalItem key={order.id} orderInCart={order} />
         ))}
         <hr />
         <div className="d-flex justify-content-center">

@@ -6,20 +6,23 @@ import Hero from "../components/Hero";
 import Item from "../components/Item";
 import { getAllItems } from "../redux/actions/item";
 import { itemStateType } from "../types";
-import { getItems } from "../utils/apis";
-import { itemFilter } from "../utils/functions";
+import { itemFilter, updateItems } from "../utils/functions";
 
 const Home = () => {
-  let items=useSelector((state:itemStateType)=>state.item)
   const stateCategory=useSelector((state:{stateCategory:string})=>state.stateCategory)
-  items=itemFilter(items,stateCategory)
   const dispatch=useDispatch()
-  const updateItems=async()=>{
-    const res=await getItems()
-    dispatch(getAllItems(res?.data.items))
+  let items=useSelector((state:itemStateType)=>state.item)
+  items=itemFilter(items,stateCategory)
+
+  const updateitems=async()=>{
+    const result=await updateItems()
+    if(result.data.length>0){
+      dispatch(getAllItems(result.data))
+    }
   }
+ 
   useEffect(()=>{
-    updateItems()
+    updateitems()
   },[])
   return (
     <section className="min-vh-100">

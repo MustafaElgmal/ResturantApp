@@ -3,52 +3,17 @@ export interface AppProps{
     show?:boolean,
     onHide?:Function,
     mytimeout?:Function,
-    order?:orderType[],
+    order?:orderType,
     user?:userType,
-}
-export interface ItemTypes{
-    id:number,
-    name:string,
-    description:string,
-    price:number,
-    imgUrl?:string,
-    popular:boolean,
-    categoryId?:number,
-    category?:categoryType
-    
-}
-export interface itemActionType{
-    type:string,
-    payload:ItemTypes
-}
-export interface itemStateType{
-    item:ItemTypes[]
-}
-export interface orderType{
-    id?:number,
-    name?:string,
-    description?:string,
-    price?:number,
-    imgUrl?:string,
-    popular?:boolean,
-    categoryId?:number,
-    category?:categoryType
-    Qty:number
-}
-export interface orderActionType{
-    type:string,
-    payload:orderType[]
-}
-
-export interface orderStateType{
-    order:orderType[]
+    orderInCart?:ItemTypes
+    orderItemTypes?:orderItemTypes
 }
 export interface userType{
     id?:number
     firstName?:string
     lastName?:string
-    email?:string
-    password?:string
+    email:string
+    password:string
     type?:string
     imgUrl?:string
     dateOfBirth?:Date
@@ -81,5 +46,60 @@ export interface categoryActionType{
 
 export interface categoryStateType{
     category:categoryType[]
+}
+export interface ItemTypes{
+    id?:number,
+    name?:string,
+    description?:string,
+    price?:number,
+    imgUrl?:string,
+    popular?:boolean,
+    category?:categoryType
+    Qty?:number
+    
+}
+export interface itemActionType{
+    type:string,
+    payload:ItemTypes
+}
+export interface itemStateType{
+    item:ItemTypes[]
+}
+
+export interface cartActionType{
+    type:string,
+    payload:ItemTypes[]
+}
+export interface cartStateType{
+    cart:ItemTypes[]
+}
+
+export interface orderItemType{
+    itemId:number,Qty:number
+}
+export interface orderType{
+    id?:number,
+    userId:number,
+    mobile:string,
+    city:string,
+    address:string,
+    items:orderItemType[],
+    isComplited?:boolean
+    orderItems?:orderItemTypes[]
+   
+}
+export interface orderActionType{
+    type:string,
+    payload:orderType[]
+}
+
+export interface orderStateType{
+    order:orderType[]
+}
+
+export interface orderItemTypes{
+    id:number,
+    Qty:number,
+    item:ItemTypes
 }
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { userType } from "../types";
+import { orderType, userType } from "../types";
 
 const baseUrl = "http://localhost:5000";
 
@@ -8,7 +8,6 @@ export const createUser = async (
 ): Promise<{ user?: userType; status?: number,message?:string,error?:string }> => {
   try {
     const res = await axios.post(`${baseUrl}/users`, user);
-    console.log(res);
     return {
       user: res.data.user,
       status: res.status,
@@ -61,7 +60,6 @@ export const getCategories=async()=>{
 
   try{
     const res=await axios.get(`${baseUrl}/categories`)
-    console.log(res)
     return res
   }catch(e){
     console.log(e)
@@ -73,9 +71,28 @@ export const getCategories=async()=>{
 export const getItems=async()=>{
   try{
     const res=await axios.get(`${baseUrl}/items`)
-    console.log(res)
+    return res
+  }catch(e){
+    console.log("Not get Items")
+  }
+}
+
+export const createOrder=async(order:orderType)=>{
+  try{
+    const res=await axios.post(`${baseUrl}/orders`,order)
+    return res
+  }catch(e){
+    console.log(e)
+  }
+
+}
+
+export const getAllOrders=async()=>{
+  try{
+    const res=await axios.get(`${baseUrl}/orders`)
     return res
   }catch(e){
     console.log(e)
   }
 }
+
