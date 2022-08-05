@@ -35,6 +35,7 @@ export const editCart = (num: number,count:number=0,ordersInCart:ItemTypes[]=[],
     } else {
         ordersInCart=[...ordersInCart,{...item,Qty:count}]
     }
+    ordersInCart=ordersInCart.filter((order)=>order?.Qty!==0)
     localStorage.setItem('cart',JSON.stringify(ordersInCart))
     return {count,ordersInCart}
 
@@ -53,3 +54,5 @@ export const editCart = (num: number,count:number=0,ordersInCart:ItemTypes[]=[],
     }
     return {data:[]}
   }
+
+

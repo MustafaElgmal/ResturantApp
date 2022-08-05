@@ -33,7 +33,7 @@ const CheckOutModal = ({ show, onHide }: AppProps) => {
     >
       <Modal.Body>
         {ordersInCart.map((order) => (
-          <CheckOutModalItem key={order.id} orderInCart={order} />
+          <CheckOutModalItem key={order.id} orderInCart={order} onHide={onHide}/>
         ))}
         <hr />
         <div className="d-flex justify-content-center">

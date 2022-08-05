@@ -4,7 +4,7 @@ import logo from "../assets/image.png";
 
 const Footer = () => {
   return (
-    <ModalFooter style={{ backgroundColor: "#303030" }} className="mt-auto">
+    <ModalFooter style={{ backgroundColor: "#303030" }}>
       <Container className="d-flex justify-content-between">
         <div className="d-flex align-items-center ">
           <h6 style={{ color: "#FFFFFF" }} className="mt-1">

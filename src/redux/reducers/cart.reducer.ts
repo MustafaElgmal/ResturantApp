@@ -5,7 +5,7 @@ const initialState=cart!==null? JSON.parse(cart):[]
 
 const reducer=(state=initialState,action:cartActionType)=>{
     switch(action.type){
-        case 'GETALLORDERSINCART':
+        case 'GETALLITEMSINCART':
             return action.payload
             default:
             return state

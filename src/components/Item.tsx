@@ -1,26 +1,36 @@
-import React, { useState } from "react";
-import { AppProps, cartStateType } from "../types";
+import React, { useEffect, useState } from "react";
+import { AppProps, cartStateType, ItemTypes } from "../types";
 import { Image, Col, Row } from "react-bootstrap";
 import pizza from "../assets/—Pngtree—seafood pizza with cheese_4942142.png";
 import { captilize, editCart } from "../utils/functions";
 import plus from "../assets/add.png";
 import minus from "../assets/minus.png";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllOrdersInCart } from "../redux/actions/cart";
+import { getAllItemsInCart } from "../redux/actions/cart";
 
 const Item = ({ item }: AppProps) => {
   const name = captilize(item?.name);
   const description = captilize(item?.description);
   const dispatch = useDispatch();
+  
   let [count, setCount] = useState(0);
   let ordersInCart = useSelector((state: cartStateType) => state.cart);
-
   const editcart=(num:number)=>{
     const result=editCart(num,count,ordersInCart,item)
     setCount(result.count)
-    dispatch(getAllOrdersInCart(result.ordersInCart))
+    dispatch(getAllItemsInCart(result.ordersInCart))
 
   }
+ 
+  useEffect(()=>{
+    const itemFind=ordersInCart.find((itemm)=>itemm?.id===item?.id)
+    if(itemFind){
+      setCount(itemFind.Qty as number)
+    }else{
+      setCount(0)
+    }
+   
+  },[ordersInCart])
   return (
     <Col>
       <Row>

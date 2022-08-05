@@ -1,9 +1,9 @@
 import {ItemTypes } from "../../types"
 
-export const getAllOrdersInCart=(orders:ItemTypes[])=>{
+export const getAllItemsInCart=(items:ItemTypes[])=>{
     return{
-        type:'GETALLORDERSINCART',
-        payload:orders
+        type:'GETALLITEMSINCART',
+        payload:items
     }
 
 }

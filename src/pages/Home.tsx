@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Buttons from "../components/Buttons";
 import Hero from "../components/Hero";
 import Item from "../components/Item";
-import { getAllItems } from "../redux/actions/item";
+import { getAllItems } from "../redux/actions/items";
 import { itemStateType } from "../types";
 import { itemFilter, updateItems } from "../utils/functions";
 

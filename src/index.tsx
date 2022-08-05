@@ -15,15 +15,18 @@ const root = ReactDOM.createRoot(
 );
 const store = createStore(reducers);
 root.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <React.StrictMode>
-        <Wrapper>
+  
+    <Provider store={store}>
+      
+      <BrowserRouter>
+      <Wrapper>
+        <React.StrictMode>
           <App />
+        </React.StrictMode>
         </Wrapper>
-      </React.StrictMode>
-    </BrowserRouter>
-  </Provider>
+      </BrowserRouter>
+      
+    </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

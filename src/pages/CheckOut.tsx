@@ -7,7 +7,8 @@ import { cartStateType, ItemTypes, orderItemType, userStateType } from "../types
 import { useFormik } from "formik";
 import * as Yup from 'yup'
 import { createOrder } from "../utils/apis";
-import { getAllOrdersInCart } from "../redux/actions/cart";
+import { getAllItemsInCart } from "../redux/actions/cart";
+import { getOrderNo } from "../redux/actions/orderNo";
 
 const CheckOut = () => {
   const navigate=useNavigate()
@@ -35,15 +36,16 @@ const CheckOut = () => {
       })
       const order={...values,userId:user.user.id||0,items}
       const res=await createOrder(order)
-      if(res?.status===500){
-        alert('Order not created!')
+      if(res?.status===201){
+        dispatch(getOrderNo(res?.data.order.orderNo))
+        alert('Order is created!')
       }else{
-        alert(res?.data.message)
+        alert('Order is not created!')
       }
-      dispatch(getAllOrdersInCart([]))
+      dispatch(getAllItemsInCart([]))
       localStorage.removeItem('cart')
       formik.resetForm()
-      navigate('/')
+      navigate('/orderSuccess')
     }
 
   })

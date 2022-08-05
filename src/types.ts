@@ -4,6 +4,8 @@ export interface AppProps{
     onHide?:Function,
     mytimeout?:Function,
     order?:orderType,
+    bool?:boolean,
+    orderNo?:string,
     user?:userType,
     orderInCart?:ItemTypes
     orderItemTypes?:orderItemTypes
@@ -84,8 +86,10 @@ export interface orderType{
     city:string,
     address:string,
     items:orderItemType[],
-    isComplited?:boolean
-    orderItems?:orderItemTypes[]
+    isCompleted?:boolean,
+    orderNo?:string,
+    orderItems?:orderItemTypes[],
+    createdAt?:Date
    
 }
 export interface orderActionType{

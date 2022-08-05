@@ -1,6 +1,6 @@
 import { categoryType } from "../../types";
 
-export const getAllCategory=(category:categoryType)=>{
+export const getAllCategories=(category:categoryType)=>{
     return{
         type:'GETCATEGORY',
         payload:category

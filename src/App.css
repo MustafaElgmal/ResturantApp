@@ -8,4 +8,7 @@
 .w div{
   width: 15%;
 }
+.decoration{
+  text-decoration: line-through;
+}
 

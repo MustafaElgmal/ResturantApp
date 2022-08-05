@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navbar, Container, Image, Nav, Button } from "react-bootstrap";
+import { Navbar, Container, Image, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/image.png";
 import navigation from "../assets/fast-delivery (1).png";
@@ -7,17 +7,20 @@ import CheckOutModal from "./CheckOutModal";
 import * as Scroll from "react-scroll";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/actions/user.action";
-import { userStateType } from "../types";
+import { cartStateType, userStateType } from "../types";
 import { getStateCategory } from "../redux/actions/stateCategory";
+import { MDBBadge } from "mdb-react-ui-kit";
 
 const Header = () => {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state: userStateType) => state.user);
+  const ordersInCart = useSelector((state: cartStateType) => state.cart);
   const logoutUser = () => {
     dispatch(logout());
     localStorage.removeItem("user");
+    dispatch(getStateCategory("popular"));
     navigate("/");
   };
 
@@ -38,7 +41,7 @@ const Header = () => {
           <Image src={logo} />
         </div>
         <div
-          className="d-flex justify-content-end gap-3"
+          className="d-flex justify-content-end gap-3 "
           style={{ color: "#FFFFFF" }}
         >
           {user.user.type === "user" && user.isLoggedIn ? (
@@ -64,15 +67,24 @@ const Header = () => {
                 duration={500}
                 style={{ textDecoration: "none", color: "white" }}
                 className="pt-2"
-                onClick={()=>dispatch(getStateCategory('popular'))}
+                onClick={() => dispatch(getStateCategory("popular"))}
               >
                 Most Popular
               </Scroll.Link>
-              <Image
-                src={navigation}
-                style={{ width: "10%" }}
-                onClick={() => setShow(true)}
-              />
+              <div className="mt-2">
+                <Image
+                  src={navigation}
+                  style={{ width: "15%" }}
+                  onClick={() =>
+                    ordersInCart.length > 0 ? setShow(true) : setShow(false)
+                  }
+                />
+                {ordersInCart.length > 0 ? (
+                  <MDBBadge color='danger' notification pill>
+                    {ordersInCart.length}
+                  </MDBBadge>
+                ) : null}
+              </div>
             </>
           ) : null}
           {user.isLoggedIn ? (

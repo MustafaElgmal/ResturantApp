@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllCategory } from "../redux/actions/category";
+import { getAllCategories} from "../redux/actions/categories";
 import { getStateCategory } from "../redux/actions/stateCategory";
 import { categoryStateType } from "../types";
 import { getCategories } from "../utils/apis";
@@ -14,7 +14,7 @@ const Buttons = () => {
   const dispatch = useDispatch();
   const updateCategories = async () => {
     const res = await getCategories();
-    dispatch(getAllCategory(res?.data.categories));
+    dispatch(getAllCategories(res?.data.categories));
   };
   useEffect(() => {
     updateCategories();

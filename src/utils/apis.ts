@@ -96,3 +96,12 @@ export const getAllOrders=async()=>{
   }
 }
 
+export const updateOrder=async(order:orderType)=>{
+  try{
+    const res=await axios.patch(`${baseUrl}/orders/${order.id}`)
+    return res.data.order
+  }catch(e){
+    console.log(e)
+  }
+}
+
