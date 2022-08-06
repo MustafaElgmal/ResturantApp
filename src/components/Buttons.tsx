@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllCategories} from "../redux/actions/categories";
+import { getAllCategories } from "../redux/actions/categories";
 import { getStateCategory } from "../redux/actions/stateCategory";
 import { categoryStateType } from "../types";
 import { getCategories } from "../utils/apis";

@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { Container, Image } from "react-bootstrap";
 import { AppProps, cartStateType } from "../types";
 import { captilize } from "../utils/functions";
@@ -44,15 +44,16 @@ const CheckOutModalItem = ({ orderInCart, onHide }: AppProps) => {
           <p>{name}</p>
           <div className="d-flex justfiy-content-between gap-2 ">
             <span>Qty: {orderInCart?.Qty}</span>
-            <span onClick={() => editcart(-1)}>-</span>
-            <span onClick={() => editcart(1)}>+</span>
+            <span onClick={() => editcart(-1)} style={{cursor:'pointer'}}>-</span>
+            <span onClick={() => editcart(1)} style={{cursor:'pointer'}}>+</span>
           </div>
           <div className="d-flex justfiy-content-between gap-3">
             <p>Total: LE {total}</p>
             <Image
               src={del}
-              style={{ width: "20px" }}
+              style={{ width: "20px",cursor:'pointer'}}
               onClick={() => deleteItemFromCart()}
+              
             />
           </div>
         </div>

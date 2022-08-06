@@ -1,10 +1,10 @@
-const reducer=(state='',action:{type:string,payload:string})=>{
-switch(action.type){
-    case 'GETOREDERNO':
-    return action.payload
+const reducer = (state = "", action: { type: string; payload: string }) => {
+  switch (action.type) {
+    case "GETOREDERNO":
+      return action.payload;
     default:
-        return state
-}
-}
+      return state;
+  }
+};
 
-export default reducer
+export default reducer;

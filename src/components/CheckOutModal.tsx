@@ -7,17 +7,17 @@ import { mult } from "../utils/functions";
 import CheckOutModalItem from "./CheckOutModalItem";
 
 const CheckOutModal = ({ show, onHide }: AppProps) => {
-  const ordersInCart=useSelector((state:cartStateType)=>state.cart)
- 
+  const ordersInCart = useSelector((state: cartStateType) => state.cart);
+
   let [total, setTotal] = useState(0);
-  
-  const setTotalMoneyOfCart=()=>{
+
+  const setTotalMoneyOfCart = () => {
     let sum = 0;
-    ordersInCart.forEach((order) => (sum +=mult(order.Qty,order.price)));
+    ordersInCart.forEach((order) => (sum += mult(order.Qty, order.price)));
     setTotal(sum);
-  }
+  };
   useEffect(() => {
-    setTotalMoneyOfCart()
+    setTotalMoneyOfCart();
   }, [ordersInCart]);
   return (
     <Modal
@@ -33,7 +33,11 @@ const CheckOutModal = ({ show, onHide }: AppProps) => {
     >
       <Modal.Body>
         {ordersInCart.map((order) => (
-          <CheckOutModalItem key={order.id} orderInCart={order} onHide={onHide}/>
+          <CheckOutModalItem
+            key={order.id}
+            orderInCart={order}
+            onHide={onHide}
+          />
         ))}
         <hr />
         <div className="d-flex justify-content-center">

@@ -53,7 +53,7 @@ const Header = () => {
                 smooth={true}
                 offset={-70}
                 duration={500}
-                style={{ textDecoration: "none", color: "white" }}
+                style={{ textDecoration: "none", color: "white" ,cursor:'pointer'}}
                 className="pt-2"
               >
                 Menu
@@ -65,7 +65,7 @@ const Header = () => {
                 smooth={true}
                 offset={-70}
                 duration={500}
-                style={{ textDecoration: "none", color: "white" }}
+                style={{ textDecoration: "none", color: "white" ,cursor:'pointer'}}
                 className="pt-2"
                 onClick={() => dispatch(getStateCategory("popular"))}
               >
@@ -74,13 +74,13 @@ const Header = () => {
               <div className="mt-2">
                 <Image
                   src={navigation}
-                  style={{ width: "15%" }}
+                  style={{ width: "15%" ,cursor:'pointer'}}
                   onClick={() =>
                     ordersInCart.length > 0 ? setShow(true) : setShow(false)
                   }
                 />
                 {ordersInCart.length > 0 ? (
-                  <MDBBadge color='danger' notification pill>
+                  <MDBBadge color="danger" notification pill>
                     {ordersInCart.length}
                   </MDBBadge>
                 ) : null}

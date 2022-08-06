@@ -5,13 +5,14 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import CheckOut from "./pages/CheckOut";
 import OrderSuccess from "./pages/OrderSuccess";
-import { Routes, Route} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import DashBord from "./pages/DashBord";
 import SignUp from "./pages/SignUp";
 import { userStateType } from "./types";
 import { useSelector } from "react-redux";
 import Protected from "./components/Protected";
 import ProtectedCheckOut from "./components/ProtectedCheckOut";
+import AdminPanal from "./pages/AdminPanal";
 
 function App() {
   const user = useSelector((state: userStateType) => state.user);
@@ -23,7 +24,7 @@ function App() {
           path="/"
           element={
             <Protected>
-              {user.user.type !== "user" ? <DashBord /> : <Home />}
+              {user.user.type === "user" ? <Home />:user.user.type==='admin'?<AdminPanal />:<DashBord />}
             </Protected>
           }
         />

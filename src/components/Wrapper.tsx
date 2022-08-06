@@ -3,7 +3,7 @@ import { useLocation } from "react-router";
 
 const Wrapper = ({ children }: any) => {
   const location = useLocation();
-  if(location.pathname==='/'){
+  if (location.pathname === "/") {
     window.scrollTo(0, 0);
   }
   useEffect(() => {

@@ -1,7 +1,6 @@
-export const getOrderNo=(orderNo:string)=>{
-    return{
-        type:'GETOREDERNO',
-        payload:orderNo
-    }
-
-}
+export const getOrderNo = (orderNo: string) => {
+  return {
+    type: "GETOREDERNO",
+    payload: orderNo,
+  };
+};

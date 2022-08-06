@@ -1,30 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React,{useEffect, useState} from "react";
 import { AppProps, orderType } from "../types";
 import { Card, Row, Col, Button } from "react-bootstrap";
-import { captilize } from "../utils/functions";
-import { updateOrder } from "../utils/apis";
-import moment from 'moment'
+import { captilize, orderColor } from "../utils/functions";
+import { getAllOrders, getOrder, updateOrder } from "../utils/apis";
+import { useDispatch } from "react-redux";
+import moment from "moment";
 
 
-const CardOrder = ({ order, bool }: AppProps) => {
-  const [clockState,setClockState]=useState('')
- 
+
+const CardOrder = ({ orderId, bool }: AppProps) => {
+  const dispatch=useDispatch()
+  const [order,setOrder]=useState({} as orderType)
+
   const orderFinshed = async() => {
-   await updateOrder(order as orderType)
+   const res=await updateOrder(orderId as number)
+   if(res?.status===200){
+    setOrder(res.data.order)
+  }
+   await getAllOrders(dispatch)
   };
-  const d=order?.createdAt||''
-  const date=moment().format()
-  console.log(d)
- 
 
-  
+  const findOrder=async()=>{
+    const res=await getOrder(orderId as number)
+    if(res?.status===200){
+      setOrder(res.data.order)
+    }
+  }
+
+  useEffect(()=>{
+    findOrder()
+  },[])
+
 
   return (
     <section className="mt-2 me-2">
       <div className="div"></div>
+      {order.isCompleted===bool? 
       <Card style={{ width: "22rem" }}>
-        <Card.Header style={{ backgroundColor:`${bool?'#303030':"#2fcd17"}`,color:'white'}} className="p-3">
-          {clockState}
+        <Card.Header style={orderColor(order,bool as boolean)} className="p-3">
         </Card.Header>
         <Card.Body>
           {order?.orderItems?.map((item) => (
@@ -59,7 +72,9 @@ const CardOrder = ({ order, bool }: AppProps) => {
             </Row>
           ) : null}
         </Card.Body>
-      </Card>
+      </Card>:null}
+     
+      
     </section>
   );
 };

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { AppProps, cartStateType, ItemTypes } from "../types";
+import { AppProps, cartStateType } from "../types";
 import { Image, Col, Row } from "react-bootstrap";
-import pizza from "../assets/—Pngtree—seafood pizza with cheese_4942142.png";
 import { captilize, editCart } from "../utils/functions";
 import plus from "../assets/add.png";
 import minus from "../assets/minus.png";
@@ -12,25 +11,23 @@ const Item = ({ item }: AppProps) => {
   const name = captilize(item?.name);
   const description = captilize(item?.description);
   const dispatch = useDispatch();
-  
+
   let [count, setCount] = useState(0);
   let ordersInCart = useSelector((state: cartStateType) => state.cart);
-  const editcart=(num:number)=>{
-    const result=editCart(num,count,ordersInCart,item)
-    setCount(result.count)
-    dispatch(getAllItemsInCart(result.ordersInCart))
+  const editcart = (num: number) => {
+    const result = editCart(num, count, ordersInCart, item);
+    setCount(result.count);
+    dispatch(getAllItemsInCart(result.ordersInCart));
+  };
 
-  }
- 
-  useEffect(()=>{
-    const itemFind=ordersInCart.find((itemm)=>itemm?.id===item?.id)
-    if(itemFind){
-      setCount(itemFind.Qty as number)
-    }else{
-      setCount(0)
+  useEffect(() => {
+    const itemFind = ordersInCart.find((itemm) => itemm?.id === item?.id);
+    if (itemFind) {
+      setCount(itemFind.Qty as number);
+    } else {
+      setCount(0);
     }
-   
-  },[ordersInCart])
+  }, [ordersInCart]);
   return (
     <Col>
       <Row>
@@ -42,7 +39,7 @@ const Item = ({ item }: AppProps) => {
           <p>{description}</p>
           <h6>Price:LE {item?.price}</h6>
           <div className="d-flex justfiy-content-between align-items-center gap-3 mt-2">
-            <Image src={minus} width="6%" onClick={() => editcart(-1)} />
+            <Image src={minus} width="6%" onClick={() => editcart(-1)}  style={{cursor:'pointer'}}/>
 
             <span
               className="rounded"
@@ -55,7 +52,7 @@ const Item = ({ item }: AppProps) => {
             >
               {count}
             </span>
-            <Image src={plus} width="6%" onClick={() => editcart(1)} />
+            <Image src={plus} width="6%" onClick={() => editcart(1)} style={{cursor:'pointer'}} />
           </div>
         </Col>
       </Row>

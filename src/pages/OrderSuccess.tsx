@@ -6,11 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getStateCategory } from "../redux/actions/stateCategory";
 
 const OrderSuccess = () => {
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const orderNo=useSelector((state:{orderNo:string})=>state.orderNo)
+  const orderNo = useSelector((state: { orderNo: string }) => state.orderNo);
   function toHome() {
-    dispatch(getStateCategory('popular'))
+    dispatch(getStateCategory("popular"));
     navigate("/");
   }
   setTimeout(toHome, 4000);

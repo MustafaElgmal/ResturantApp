@@ -1,61 +1,65 @@
-import React,{useState,useEffect} from "react";
-import { Container,Button } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Container, Button } from "react-bootstrap";
 import CheckOutModalItem from "../components/CheckOutModalItem";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { cartStateType, ItemTypes, orderItemType, userStateType } from "../types";
+import {
+  cartStateType,
+  ItemTypes,
+  orderItemType,
+  userStateType,
+} from "../types";
 import { useFormik } from "formik";
-import * as Yup from 'yup'
-import { createOrder } from "../utils/apis";
+import * as Yup from "yup";
+import { createOrder, getAllOrders } from "../utils/apis";
 import { getAllItemsInCart } from "../redux/actions/cart";
-import { getOrderNo } from "../redux/actions/orderNo";
 
 const CheckOut = () => {
-  const navigate=useNavigate()
-  const dispatch=useDispatch()
-  const ordersInCart=useSelector((state:cartStateType)=>state.cart)
-  const user=useSelector((state:userStateType)=>state.user)
-  const name=`${user.user.firstName} ${user.user.lastName}`
-  const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
-  const formik=useFormik({
-    initialValues:{
-      mobile:"",
-      city:"",
-      address:""
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const ordersInCart = useSelector((state: cartStateType) => state.cart);
+  const user = useSelector((state: userStateType) => state.user);
+  const name = `${user.user.firstName} ${user.user.lastName}`;
+  const phoneRegExp =
+    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+  const formik = useFormik({
+    initialValues: {
+      mobile: "",
+      city: "",
+      address: "",
     },
-    validationSchema:Yup.object({
-      mobile:Yup.string().matches(phoneRegExp, 'Phone number is not valid!').required('Phone is required!'),
-      city:Yup.string().max(20,'Max character is 20!').required('City is required!'),
-      address:Yup.string().required('Address is required!')
-
+    validationSchema: Yup.object({
+      mobile: Yup.string()
+        .matches(phoneRegExp, "Phone number is not valid!")
+        .required("Phone is required!"),
+      city: Yup.string()
+        .max(20, "Max character is 20!")
+        .required("City is required!"),
+      address: Yup.string().required("Address is required!"),
     }),
-    onSubmit:async(values)=>{
-      let items:orderItemType[]=[]
-      ordersInCart.forEach((order:ItemTypes)=>{
-        items.push({itemId:order.id||0,Qty:order.Qty||0})
-      })
-      const order={...values,userId:user.user.id||0,items}
-      const res=await createOrder(order)
-      if(res?.status===201){
-        dispatch(getOrderNo(res?.data.order.orderNo))
-        alert('Order is created!')
-      }else{
-        alert('Order is not created!')
-      }
-      dispatch(getAllItemsInCart([]))
-      localStorage.removeItem('cart')
-      formik.resetForm()
-      navigate('/orderSuccess')
-    }
-
-  })
+    onSubmit: async (values) => {
+      let items: orderItemType[] = [];
+      ordersInCart.forEach((order: ItemTypes) => {
+        items.push({ itemId: order.id as number, Qty: order.Qty as number });
+      });
+      const order = { ...values, userId: user.user.id as number, items };
+      await createOrder(order, dispatch);
+      await getAllOrders(dispatch);
+      dispatch(getAllItemsInCart([]));
+      localStorage.removeItem("cart");
+      formik.resetForm();
+      navigate("/orderSuccess");
+    },
+  });
   let [total, setTotal] = useState(0);
   useEffect(() => {
     let sum = 0;
-    ordersInCart.forEach((order) => (sum += ((order?.price || 0) * (order?.Qty||0))));
+    ordersInCart.forEach(
+      (order) => (sum += (order?.price || 0) * (order?.Qty || 0))
+    );
     setTotal(sum);
   }, [ordersInCart]);
-  
+
   return (
     <div className="d-flex justify-content-between min-vh-100 mt-5">
       <Container className="card-body p-md-5 ms-5">
@@ -88,7 +92,9 @@ const CheckOut = () => {
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />
-                  {formik.errors.mobile&&formik.touched.mobile?<p className="text-muted">{formik.errors.mobile}</p>:null}
+                  {formik.errors.mobile && formik.touched.mobile ? (
+                    <p className="text-muted">{formik.errors.mobile}</p>
+                  ) : null}
                 </div>
               </div>
               <div className="d-flex flex-row align-items-center mb-4">
@@ -104,7 +110,9 @@ const CheckOut = () => {
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />
-                  {formik.errors.city&&formik.touched.city?<p className="text-muted">{formik.errors.city}</p>:null}
+                  {formik.errors.city && formik.touched.city ? (
+                    <p className="text-muted">{formik.errors.city}</p>
+                  ) : null}
                 </div>
               </div>
               <div className="d-flex flex-row align-items-center mb-4">
@@ -120,11 +128,13 @@ const CheckOut = () => {
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                   />
-                  {formik.errors.address&&formik.touched.address?<p className="text-muted">{formik.errors.address}</p>:null}
+                  {formik.errors.address && formik.touched.address ? (
+                    <p className="text-muted">{formik.errors.address}</p>
+                  ) : null}
                 </div>
               </div>
               <div className=" d-flex gap-2">
-                <Button variant="danger" onClick={()=>formik.handleSubmit()}>
+                <Button variant="danger" onClick={() => formik.handleSubmit()}>
                   Order Now
                 </Button>
                 <Link to="/" className="btn btn-light">
