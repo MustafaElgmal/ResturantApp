@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { getOrderNo } from "../redux/actions/orderNo";
 import { getOrders } from "../redux/actions/orders";
 import { getLengths } from "../redux/actions/ordersLengths";
-import { orderType, userType } from "../types";
+import { ItemTypes, orderType, userType } from "../types";
 
 const baseUrl = "http://localhost:5000";
 
@@ -126,3 +126,33 @@ export const getOrder = async (orderId: number) => {
     console.log(e);
   }
 };
+
+export const createItem=async(item:ItemTypes)=>{
+ const {categoryId}=item
+  try{
+    const res=await axios.post(`${baseUrl}/items/${categoryId}`,item)
+    return res
+
+  }catch(e:any){
+    if(e.status===500){
+      console.log(e)
+    }else{
+      alert(e.response.data.message)
+    }
+  }
+}
+
+export const createCategory=async(cate:{name:string})=>{
+  try{
+    const res=await axios.post(`${baseUrl}/categories`,cate)
+    return res
+
+  }catch(e:any){
+    if(e.status===500){
+      console.log(e)
+    }else{
+      alert(e.response.data.message)
+    }
+  }
+
+}

@@ -51,7 +51,7 @@ const CheckOutModalItem = ({ orderInCart, onHide }: AppProps) => {
             <p>Total: LE {total}</p>
             <Image
               src={del}
-              style={{ width: "20px",cursor:'pointer'}}
+              style={{ width: "20px",height:'20px',cursor:'pointer'}}
               onClick={() => deleteItemFromCart()}
               
             />

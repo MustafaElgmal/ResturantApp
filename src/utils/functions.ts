@@ -56,23 +56,21 @@ export const updateItems = async () => {
 };
 
 export const orderColor=(order:orderType,bool:boolean)=>{
+  const now=new Date(Date.now()).getTime()
+  const then=new Date(order.createdAt as Date).getTime()
+   const diff=Math.round((now -then))
   if(!bool){
-    const now=new Date(Date.now()).getTime()
-    console.log()
-
-    const then=new Date(order.createdAt as Date).getTime()
-    const diff=Math.round((now -then)/60000)
-    moment(diff).format('h:mm:ss')
-    console.log(moment(diff).format('h:mm:ss'))
-    if(diff<15){
-      return { backgroundColor:"#2fcd17",color:'white'}
-    }else if(diff<30){
-      return { backgroundColor:"#FF9200",color:'white'}
+    if(diff<900000){
+      return { backgroundColor:"#2fcd17",color:'white',time:diff}
+    }else if(diff<1800000){
+      return { backgroundColor:"#FF9200",color:'white',time:diff}
     }else{
-      return { backgroundColor:"#CD2F17",color:'white'}
+      return { backgroundColor:"#CD2F17",color:'white',time:diff}
     }
 
   }
-  return { backgroundColor:"#303030",color:'white'}
+  return { backgroundColor:"#303030",color:'white',time:diff}
 
 }
+
+

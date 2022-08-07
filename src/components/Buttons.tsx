@@ -20,7 +20,7 @@ const Buttons = () => {
     updateCategories();
   }, []);
   return (
-    <section className="d-flex justify-content-center gap-2 mt-5" id="menu">
+    <section className="d-flex flex-wrap justify-content-center gap-2 mt-5" id="menu">
       <Button
         style={
           stateCategory === "popular"

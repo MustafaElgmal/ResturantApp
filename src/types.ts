@@ -42,7 +42,7 @@ export interface categoryType {
 }
 export interface categoryActionType {
   type: string;
-  payload: categoryType;
+  payload: categoryType[];
 }
 
 export interface categoryStateType {
@@ -56,6 +56,7 @@ export interface ItemTypes {
   imgUrl?: string;
   popular?: boolean;
   category?: categoryType;
+  categoryId?:number
   Qty?: number;
 }
 export interface itemActionType {
@@ -89,6 +90,7 @@ export interface orderType {
   orderNo?: string;
   orderItems?: orderItemTypes[];
   createdAt?: Date;
+  updatedAt?: Date;
 }
 export interface orderActionType {
   type: string;

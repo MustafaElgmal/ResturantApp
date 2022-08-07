@@ -27,9 +27,8 @@ const CheckOutModal = ({ show, onHide }: AppProps) => {
         onHide && onHide();
       }}
       aria-labelledby="example-modal-sizes-title-sm"
-      style={{ marginLeft: "37%", marginTop: "3%" }}
       scrollable={true}
-      className="min-vh-100"
+      className="min-vh-100  mg"
     >
       <Modal.Body>
         {ordersInCart.map((order) => (

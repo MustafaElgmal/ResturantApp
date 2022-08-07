@@ -17,8 +17,9 @@ const Hero = () => {
         className="fs-1 fw-bold"
       >
         <p>ENJOY OUR</p>
-        <p>
-          DELICIOUS<span style={{ color: "#FF9200" }}>FOOD</span>
+        <p className="d-flex flex-wrap">
+          <span className="mb-2">DELICIOUS</span>
+          <span style={{ color: "#FF9200" }}>FOOD</span>
         </p>
       </div>
       <Image src={piza} style={{ width: "25%" }} />

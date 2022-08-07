@@ -1,8 +1,8 @@
 import { categoryType } from "../../types";
 
-export const getAllCategories = (category: categoryType) => {
+export const getAllCategories = (categories: categoryType[]) => {
   return {
     type: "GETCATEGORY",
-    payload: category,
+    payload: categories,
   };
 };

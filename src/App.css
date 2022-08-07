@@ -19,4 +19,29 @@
   border-radius:'2px' ;
   border-color:'#FF9200';
 }
+.mg{
+  
+  left: 30% !important;
+  top:5% !important
+}
+.cartt{
+  border-left: 3px  solid  gray ;
+  width:25%;
+}
+
+@media screen and (max-width:550px) {
+  .mg{
+    left: 0 !important;
+  }
+  
+}
+
+@media screen and (max-width:650px) {
+  .cartt{
+    border-left:0 !important;
+    width:80% !important;
+    margin: auto !important;
+  }
+  
+}
 

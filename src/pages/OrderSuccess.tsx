@@ -13,7 +13,7 @@ const OrderSuccess = () => {
     dispatch(getStateCategory("popular"));
     navigate("/");
   }
-  setTimeout(toHome, 4000);
+  setTimeout(toHome, 20000);
   return (
     <div
       className="d-flex flex-column justify-content-center min-vh-100 align-items-center mt-5"
@@ -21,7 +21,10 @@ const OrderSuccess = () => {
     >
       <div className="div"></div>
       <Image src={Done} style={{ width: "10rem" }} />
-      <p className="fs-1 fw-bold">{`Order No ${orderNo} Placed`}</p>
+      <div className="d-flex flex-wrap">
+      <p className="fs-1 fw-bold">{`Order ${orderNo} Placed`}</p>
+      </div>
+      
     </div>
   );
 };

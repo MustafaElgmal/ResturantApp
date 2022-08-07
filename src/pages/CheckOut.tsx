@@ -61,11 +61,11 @@ const CheckOut = () => {
   }, [ordersInCart]);
 
   return (
-    <div className="d-flex justify-content-between min-vh-100 mt-5">
-      <Container className="card-body p-md-5 ms-5">
-        <div className="row justify-content-start">
-          <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-            <form className="mx-1 mx-md-4">
+    <Container className="d-flex justify-content-between min-vh-100 mt-5 flex-wrap-reverse">
+      <div className="card-body p-md-5">
+        <div className="row justify-content-start mt-5">
+          <div className="col-md-10 col-lg-8 col-xl-8 order-2 order-lg-1">
+            <form className="mx-1 mx-md-4 widd">
               <div className="d-flex flex-row align-items-center mb-4">
                 <div className="form-outline flex-fill mb-0">
                   <input
@@ -144,9 +144,9 @@ const CheckOut = () => {
             </form>
           </div>
         </div>
-      </Container>
+      </div>
 
-      <div style={{ borderLeft: "3px  solid  gray ", width: "25%" }}>
+      <div className="cartt">
         <div className="div"></div>
         {ordersInCart.map((order) => (
           <CheckOutModalItem key={order.id} orderInCart={order} />
@@ -156,7 +156,7 @@ const CheckOut = () => {
           <p>SupTotal: LE {total}</p>
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 
