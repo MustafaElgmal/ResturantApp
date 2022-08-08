@@ -5,7 +5,6 @@ import { cartStateType} from '../types';
 
 const ProtectedCheckOut = ({children }:any) => {
     const ordersInCart=useSelector((state:cartStateType)=>state.cart)
-    console.log(ordersInCart)
     return <div>{ordersInCart.length>0 ? children : <Home/>}</div>;
 }
 

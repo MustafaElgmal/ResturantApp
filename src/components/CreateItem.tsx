@@ -28,12 +28,15 @@ const CreateItem = ({ show, onHide }: AppProps) => {
     }),
     onSubmit: async (values) => {
       const item = {
-        name: values.name,
-        description: values.description,
-        price: parseInt(values.price as string),
-        categoryId: parseInt(values.categoryId as string),
-        imgUrl: values.imgUrl,
-        popular: Boolean(values.popular),
+          name: values.name,
+          description: values.description,
+          price: parseInt(values.price as string),
+          imgUrl: values.imgUrl,
+          popular: Boolean(values.popular),
+          category:{
+            id:parseInt(values.categoryId as string),
+            name:""
+          }
       };
 
       const res = await createItem(item);

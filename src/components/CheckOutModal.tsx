@@ -7,18 +7,18 @@ import { mult } from "../utils/functions";
 import CheckOutModalItem from "./CheckOutModalItem";
 
 const CheckOutModal = ({ show, onHide }: AppProps) => {
-  const ordersInCart = useSelector((state: cartStateType) => state.cart);
+  const itemsInCart = useSelector((state: cartStateType) => state.cart);
 
   let [total, setTotal] = useState(0);
 
   const setTotalMoneyOfCart = () => {
     let sum = 0;
-    ordersInCart.forEach((order) => (sum += mult(order.Qty, order.price)));
+    itemsInCart.forEach((item) => (sum += mult(item.Qty as number, item.price)));
     setTotal(sum);
   };
   useEffect(() => {
     setTotalMoneyOfCart();
-  }, [ordersInCart]);
+  }, [itemsInCart]);
   return (
     <Modal
       size="sm"
@@ -31,10 +31,10 @@ const CheckOutModal = ({ show, onHide }: AppProps) => {
       className="min-vh-100  mg"
     >
       <Modal.Body>
-        {ordersInCart.map((order) => (
+        {itemsInCart.map((item) => (
           <CheckOutModalItem
-            key={order.id}
-            orderInCart={order}
+            key={item.id}
+            item={item}
             onHide={onHide}
           />
         ))}

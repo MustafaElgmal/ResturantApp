@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { AppProps, cartStateType } from "../types";
+import { AppProps, cartStateType, ItemTypes } from "../types";
 import { Image, Col, Row } from "react-bootstrap";
 import { captilize, editCart } from "../utils/functions";
 import plus from "../assets/add.png";
@@ -8,16 +8,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllItemsInCart } from "../redux/actions/cart";
 
 const Item = ({ item }: AppProps) => {
-  const name = captilize(item?.name);
-  const description = captilize(item?.description);
+  const name = captilize(item?.name as string);
+  const description = captilize(item?.description as string);
   const dispatch = useDispatch();
 
   let [count, setCount] = useState(0);
   let ordersInCart = useSelector((state: cartStateType) => state.cart);
   const editcart = (num: number) => {
-    const result = editCart(num, count, ordersInCart, item);
+    const result = editCart(num, count, ordersInCart, item as ItemTypes);
     setCount(result.count);
-    dispatch(getAllItemsInCart(result.ordersInCart));
+    dispatch(getAllItemsInCart(result.itemsInCart));
   };
 
   useEffect(() => {

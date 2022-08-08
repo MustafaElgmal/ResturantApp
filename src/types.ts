@@ -9,15 +9,15 @@ export interface AppProps {
   orderNo?: string;
   user?: userType;
   orderInCart?: ItemTypes;
-  orderItemTypes?: orderItemTypes;
 }
+
 export interface userType {
   id?: number;
-  firstName?: string;
-  lastName?: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
-  type?: string;
+  type: string;
   imgUrl?: string;
   dateOfBirth?: Date;
 }
@@ -38,7 +38,6 @@ export interface userStateType {
 export interface categoryType {
   id: number;
   name: string;
-  items: ItemTypes[];
 }
 export interface categoryActionType {
   type: string;
@@ -50,13 +49,12 @@ export interface categoryStateType {
 }
 export interface ItemTypes {
   id?: number;
-  name?: string;
-  description?: string;
-  price?: number;
-  imgUrl?: string;
-  popular?: boolean;
-  category?: categoryType;
-  categoryId?:number
+  name: string;
+  description: string;
+  price: number;
+  imgUrl: string;
+  popular: boolean;
+  category: categoryType;
   Qty?: number;
 }
 export interface itemActionType {
@@ -76,46 +74,31 @@ export interface cartStateType {
 }
 
 export interface orderItemType {
-  itemId: number;
-  Qty: number;
-}
-export interface orderType {
   id?: number;
-  userId: number;
-  mobile: string;
-  city: string;
-  address: string;
-  items: orderItemType[];
-  isCompleted?: boolean;
-  orderNo?: string;
-  orderItems?: orderItemTypes[];
-  createdAt?: Date;
-  updatedAt?: Date;
-}
-export interface orderActionType {
-  type: string;
-  payload: orderType[];
-}
-
-export interface orderStateType {
-  order: orderType[];
-}
-
-export interface orderItemTypes {
-  id: number;
   Qty: number;
   item: ItemTypes;
 }
-
+export interface orderType {
+  id?: number;
+  mobile: string;
+  city: string;
+  address: string;
+  user: userType;
+  orderItems: orderItemType[];
+  isCompleted?: boolean;
+  orderNo?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
 export interface lengthTypes {
   pendingOrdersLength: number;
   completedOrdersLength: number;
 }
-
-export interface lengthActionTypes {
+export interface orderActionType {
   type: string;
-  payload: lengthTypes;
+  payload:{ orders: orderType[]; lengths: lengthTypes };
 }
-export interface lengthStateTypes {
-  lengths: lengthTypes;
+
+export interface orderStateType {
+  order: { orders: orderType[]; lengths: lengthTypes };
 }

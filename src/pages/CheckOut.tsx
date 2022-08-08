@@ -8,6 +8,7 @@ import {
   ItemTypes,
   orderItemType,
   userStateType,
+  userType,
 } from "../types";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -17,7 +18,7 @@ import { getAllItemsInCart } from "../redux/actions/cart";
 const CheckOut = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const ordersInCart = useSelector((state: cartStateType) => state.cart);
+  const itemsInCart = useSelector((state: cartStateType) => state.cart);
   const user = useSelector((state: userStateType) => state.user);
   const name = `${user.user.firstName} ${user.user.lastName}`;
   const phoneRegExp =
@@ -38,27 +39,27 @@ const CheckOut = () => {
       address: Yup.string().required("Address is required!"),
     }),
     onSubmit: async (values) => {
-      let items: orderItemType[] = [];
-      ordersInCart.forEach((order: ItemTypes) => {
-        items.push({ itemId: order.id as number, Qty: order.Qty as number });
+      let orderItems: orderItemType[]=[];
+      itemsInCart.forEach((item: ItemTypes) => {
+        orderItems.push({Qty: item.Qty as number,item});
       });
-      const order = { ...values, userId: user.user.id as number, items };
-      await createOrder(order, dispatch);
+      const order = { ...values, user: user.user as userType,orderItems};
+      const orderNo=await createOrder(order, dispatch);
       await getAllOrders(dispatch);
       dispatch(getAllItemsInCart([]));
       localStorage.removeItem("cart");
       formik.resetForm();
-      navigate("/orderSuccess");
+      navigate(`/orderSuccess/${orderNo}`);
     },
   });
   let [total, setTotal] = useState(0);
   useEffect(() => {
     let sum = 0;
-    ordersInCart.forEach(
-      (order) => (sum += (order?.price || 0) * (order?.Qty || 0))
+    itemsInCart.forEach(
+      (item) => (sum += (item?.price) * (item?.Qty as number))
     );
     setTotal(sum);
-  }, [ordersInCart]);
+  }, [itemsInCart]);
 
   return (
     <Container className="d-flex justify-content-between min-vh-100 mt-5 flex-wrap-reverse">
@@ -148,8 +149,8 @@ const CheckOut = () => {
 
       <div className="cartt">
         <div className="div"></div>
-        {ordersInCart.map((order) => (
-          <CheckOutModalItem key={order.id} orderInCart={order} />
+        {itemsInCart.map((item) => (
+          <CheckOutModalItem key={item.id} item={item} />
         ))}
         <hr />
         <div className="d-flex justify-content-center">

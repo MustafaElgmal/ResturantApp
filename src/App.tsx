@@ -28,14 +28,7 @@ function App() {
             </Protected>
           }
         />
-        <Route
-          path="/orderSuccess"
-          element={
-            <Protected>
-              <OrderSuccess />
-            </Protected>
-          }
-        />
+        
 
         <Route
           path="/checkOut"
@@ -44,6 +37,15 @@ function App() {
               <ProtectedCheckOut>
                 <CheckOut />
               </ProtectedCheckOut>
+            </Protected>
+          }
+        />
+        
+        <Route
+          path="/orderSuccess/:orderNo"
+          element={
+            <Protected>
+              <OrderSuccess />
             </Protected>
           }
         />

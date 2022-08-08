@@ -1,5 +1,7 @@
+import { getAllItems } from './../redux/actions/items';
 import moment from "moment";
 import { useDispatch } from "react-redux";
+import { Dispatch } from "redux";
 import { ItemTypes, orderType } from "../types";
 import { getItems } from "./apis";
 
@@ -13,7 +15,7 @@ export const itemFilter = (items: ItemTypes[], type: string) => {
   return itemsfilter;
 };
 
-export const captilize = (name: string = "") => {
+export const captilize = (name: string) => {
   let nameCap = name
     .split(" ")
     .map((ele) => ele[0].toLocaleUpperCase() + ele.slice(1))
@@ -23,36 +25,35 @@ export const captilize = (name: string = "") => {
 
 export const editCart = (
   num: number,
-  count: number = 0,
-  ordersInCart: ItemTypes[] = [],
-  item: ItemTypes = {}
+  count: number,
+  itemsInCart: ItemTypes[],
+  item: ItemTypes
 ) => {
   num === -1 ? (count > 0 ? (count += num) : (count = 0)) : (count += num);
-  const orderFind = ordersInCart.find((order) => order.id === item?.id);
+  const orderFind = itemsInCart.find((order) => order.id === item?.id);
   if (orderFind) {
-    ordersInCart = ordersInCart.filter((order) =>
+    itemsInCart = itemsInCart.filter((order) =>
       order.id === item?.id ? (order.Qty = count) : order.Qty
     );
   } else {
-    ordersInCart = [...ordersInCart, { ...item, Qty: count }];
+    itemsInCart = [...itemsInCart, { ...item, Qty: count }];
   }
-  ordersInCart = ordersInCart.filter((order) => order?.Qty !== 0);
-  localStorage.setItem("cart", JSON.stringify(ordersInCart));
-  return { count, ordersInCart };
+  itemsInCart = itemsInCart.filter((order) => order?.Qty !== 0);
+  localStorage.setItem("cart", JSON.stringify(itemsInCart));
+  return { count, itemsInCart };
 };
 
-export const mult = (num1: number = 0, num2: number = 0) => {
+export const mult = (num1: number, num2: number ) => {
   return num1 * num2;
 };
 
-export const updateItems = async () => {
+export const updateItems = async (dispatch:Dispatch) => {
   const res = await getItems();
   if (res?.status === 200) {
-    return { data: res?.data.items };
-  } else {
+    dispatch(getAllItems(res.data.items))
+  }else{
     console.log("Not get Items");
   }
-  return { data: [] };
 };
 
 export const orderColor=(order:orderType,bool:boolean)=>{

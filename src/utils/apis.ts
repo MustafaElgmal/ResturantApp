@@ -1,8 +1,6 @@
 import axios from "axios";
 import { Dispatch } from "redux";
-import { getOrderNo } from "../redux/actions/orderNo";
 import { getOrders } from "../redux/actions/orders";
-import { getLengths } from "../redux/actions/ordersLengths";
 import { ItemTypes, orderType, userType } from "../types";
 
 const baseUrl = "http://localhost:5000";
@@ -36,9 +34,10 @@ export const createUser = async (
   }
 };
 
-export const loginUser = async (
-  user: userType
-): Promise<{
+export const loginUser = async (user: {
+  email: string;
+  password: string;
+}): Promise<{
   user?: userType;
   status?: number;
   message?: string;
@@ -85,13 +84,21 @@ export const getItems = async () => {
 
 export const createOrder = async (order: orderType, dispatch: Dispatch) => {
   try {
-    const res = await axios.post(`${baseUrl}/orders`, order);
+    const orderr = {
+      user: order.user,
+      mobile: order.mobile,
+      city: order.city,
+      address: order.address,
+      orderItems: order.orderItems,
+    };
+    const res = await axios.post(`${baseUrl}/orders`, orderr);
     if (res?.status === 201) {
       alert("Order is created!");
-      dispatch(getOrderNo(res?.data.order.orderNo));
+      return res.data.order.orderNo
     } else {
       alert("Order is not created!");
     }
+    
   } catch (e) {
     console.log(e);
   }
@@ -101,8 +108,8 @@ export const getAllOrders = async (dispatch: Dispatch) => {
   try {
     const res = await axios.get(`${baseUrl}/orders`);
     if (res.status === 200) {
-      dispatch(getOrders(res.data.orders));
-      dispatch(getLengths(res.data.lengths));
+      const orders = { orders: res.data.orders, lengths: res.data.lengths };
+      dispatch(getOrders(orders));
     }
   } catch (e) {
     console.log(e);
@@ -127,32 +134,29 @@ export const getOrder = async (orderId: number) => {
   }
 };
 
-export const createItem=async(item:ItemTypes)=>{
- const {categoryId}=item
-  try{
-    const res=await axios.post(`${baseUrl}/items/${categoryId}`,item)
-    return res
-
-  }catch(e:any){
-    if(e.status===500){
-      console.log(e)
-    }else{
-      alert(e.response.data.message)
+export const createItem = async (item: ItemTypes) => {
+  const { category } = item;
+  try {
+    const res = await axios.post(`${baseUrl}/items/${category.id}`, item);
+    return res;
+  } catch (e: any) {
+    if (e.status === 500) {
+      console.log(e);
+    } else {
+      alert(e.response.data.message);
     }
   }
-}
+};
 
-export const createCategory=async(cate:{name:string})=>{
-  try{
-    const res=await axios.post(`${baseUrl}/categories`,cate)
-    return res
-
-  }catch(e:any){
-    if(e.status===500){
-      console.log(e)
-    }else{
-      alert(e.response.data.message)
+export const createCategory = async (cate: { name: string }) => {
+  try {
+    const res = await axios.post(`${baseUrl}/categories`, cate);
+    return res;
+  } catch (e: any) {
+    if (e.status === 500) {
+      console.log(e);
+    } else {
+      alert(e.response.data.message);
     }
   }
-
-}
+};

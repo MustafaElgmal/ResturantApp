@@ -44,7 +44,6 @@ const SignUp = () => {
           navigate("/");
         }
       }
-
       formik.resetForm();
     },
   });
@@ -52,6 +51,7 @@ const SignUp = () => {
     <section className="mt-5 min-vh-100">
       <div className="container h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
+        <div className="div"></div>
           <div className="col-lg-12 col-xl-11">
             <div
               className="card text-black mt-4"

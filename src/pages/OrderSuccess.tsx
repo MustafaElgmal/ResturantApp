@@ -1,19 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Image } from "react-bootstrap";
 import Done from "../assets/checked.png";
-import { useNavigate } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router";
+import { useDispatch } from "react-redux";
 import { getStateCategory } from "../redux/actions/stateCategory";
 
 const OrderSuccess = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const orderNo = useSelector((state: { orderNo: string }) => state.orderNo);
+  const {orderNo}=useParams()
   function toHome() {
     dispatch(getStateCategory("popular"));
     navigate("/");
   }
-  setTimeout(toHome, 20000);
+  setTimeout(toHome,4000);
+
+  useEffect(()=>{
+    
+
+  },[])
   return (
     <div
       className="d-flex flex-column justify-content-center min-vh-100 align-items-center mt-5"
