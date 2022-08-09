@@ -24,7 +24,7 @@ const Header = () => {
     dispatch(removeAllItemsInCart())
     localStorage.removeItem("cart")
     dispatch(getStateCategory("popular"));
-    navigate("/signin");
+    navigate("/");
   };
 
   return (
