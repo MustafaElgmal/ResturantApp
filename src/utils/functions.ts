@@ -1,6 +1,4 @@
 import { getAllItems } from './../redux/actions/items';
-import moment from "moment";
-import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { ItemTypes, orderType } from "../types";
 import { getItems } from "./apis";
@@ -30,8 +28,8 @@ export const editCart = (
   item: ItemTypes
 ) => {
   num === -1 ? (count > 0 ? (count += num) : (count = 0)) : (count += num);
-  const orderFind = itemsInCart.find((order) => order.id === item?.id);
-  if (orderFind) {
+  const itemFind = itemsInCart.find((order) => order.id === item?.id);
+  if (itemFind) {
     itemsInCart = itemsInCart.filter((order) =>
       order.id === item?.id ? (order.Qty = count) : order.Qty
     );

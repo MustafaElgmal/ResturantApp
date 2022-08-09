@@ -1,8 +1,9 @@
+import { itemActionType } from './../../types';
 import { ItemTypes } from "../../types";
 
-export const getAllItems = (item: ItemTypes) => {
+export const getAllItems = (items:ItemTypes[]):itemActionType => {
   return {
     type: "GETITEMS",
-    payload: item,
+    payload: items,
   };
 };

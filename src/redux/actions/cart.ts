@@ -6,3 +6,10 @@ export const getAllItemsInCart = (items: ItemTypes[]) => {
     payload: items,
   };
 };
+
+export const removeAllItemsInCart = () => {
+  return {
+    type: "REMOVEALLITEMSINCART",
+    payload:[],
+  };
+};

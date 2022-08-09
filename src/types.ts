@@ -59,7 +59,7 @@ export interface ItemTypes {
 }
 export interface itemActionType {
   type: string;
-  payload: ItemTypes;
+  payload: ItemTypes[];
 }
 export interface itemStateType {
   item: ItemTypes[];

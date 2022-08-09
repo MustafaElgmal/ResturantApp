@@ -11,23 +11,22 @@ const Item = ({ item }: AppProps) => {
   const name = captilize(item?.name as string);
   const description = captilize(item?.description as string);
   const dispatch = useDispatch();
-
   let [count, setCount] = useState(0);
-  let ordersInCart = useSelector((state: cartStateType) => state.cart);
+  let itemsInCart = useSelector((state: cartStateType) => state.cart);
   const editcart = (num: number) => {
-    const result = editCart(num, count, ordersInCart, item as ItemTypes);
+    const result = editCart(num, count, itemsInCart, item as ItemTypes);
     setCount(result.count);
     dispatch(getAllItemsInCart(result.itemsInCart));
   };
 
   useEffect(() => {
-    const itemFind = ordersInCart.find((itemm) => itemm?.id === item?.id);
+    const itemFind = itemsInCart.find((itemm) => itemm?.id === item?.id);
     if (itemFind) {
       setCount(itemFind.Qty as number);
     } else {
       setCount(0);
     }
-  }, [ordersInCart]);
+  }, [itemsInCart]);
   return (
     <Col>
       <Row>

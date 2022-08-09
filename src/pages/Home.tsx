@@ -22,6 +22,7 @@ const Home = () => {
   useEffect(() => {
     updateitems();
   }, []);
+  
   return (
     <section className="min-vh-100">
       <Hero />

@@ -8,17 +8,14 @@ import { getStateCategory } from "../redux/actions/stateCategory";
 const OrderSuccess = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {orderNo}=useParams()
-  function toHome() {
-    dispatch(getStateCategory("popular"));
-    navigate("/");
-  }
-  setTimeout(toHome,4000);
+  const { orderNo } = useParams();
 
-  useEffect(()=>{
-    
-
-  },[])
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(getStateCategory("popular"));
+      navigate("/");
+    }, 4000);
+  }, []);
   return (
     <div
       className="d-flex flex-column justify-content-center min-vh-100 align-items-center mt-5"
@@ -27,9 +24,8 @@ const OrderSuccess = () => {
       <div className="div"></div>
       <Image src={Done} style={{ width: "10rem" }} />
       <div className="d-flex flex-wrap">
-      <p className="fs-1 fw-bold">{`Order ${orderNo} Placed`}</p>
+        <p className="fs-1 fw-bold">{`Order ${orderNo} Placed`}</p>
       </div>
-      
     </div>
   );
 };

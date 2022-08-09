@@ -10,18 +10,21 @@ import { logout } from "../redux/actions/user.action";
 import { cartStateType, userStateType } from "../types";
 import { getStateCategory } from "../redux/actions/stateCategory";
 import { MDBBadge } from "mdb-react-ui-kit";
+import { removeAllItemsInCart } from "../redux/actions/cart";
 
 const Header = () => {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state: userStateType) => state.user);
-  const ordersInCart = useSelector((state: cartStateType) => state.cart);
+  const itemsInCart = useSelector((state: cartStateType) => state.cart);
   const logoutUser = () => {
     dispatch(logout());
     localStorage.removeItem("user");
+    dispatch(removeAllItemsInCart())
+    localStorage.removeItem("cart")
     dispatch(getStateCategory("popular"));
-    navigate("/");
+    navigate("/signin");
   };
 
   return (
@@ -46,7 +49,7 @@ const Header = () => {
           <Nav className="ms-auto ps-2">
             {user.user.type === "user" && user.isLoggedIn ? (
               <>
-                <Nav.Link>
+                
                   <Scroll.Link
                     activeClass="active"
                     to="menu"
@@ -63,9 +66,8 @@ const Header = () => {
                   >
                     Menu
                   </Scroll.Link>
-                </Nav.Link>
+                
 
-                <Nav.Link>
                   <Scroll.Link
                     activeClass="active"
                     to="menu"
@@ -83,22 +85,24 @@ const Header = () => {
                   >
                     Most Popular
                   </Scroll.Link>
-                </Nav.Link>
+                
 
-                <Nav.Link>
-                  <Image
+                <div className="mt-2">
+                <Image
                     src={navigation}
                     style={{ width: "20px", cursor: "pointer" }}
                     onClick={() =>
-                      ordersInCart.length > 0 ? setShow(true) : setShow(false)
+                      itemsInCart.length > 0 ? setShow(true) : setShow(false)
                     }
                   />
-                  {ordersInCart.length > 0 ? (
+                  {itemsInCart.length > 0 ? (
                     <MDBBadge color="danger" notification pill>
-                      {ordersInCart.length}
+                      {itemsInCart.length}
                     </MDBBadge>
                   ) : null}
-                </Nav.Link>
+
+                </div>
+                 
               </>
             ) : null}
 

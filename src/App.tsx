@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import Protected from "./components/Protected";
 import ProtectedCheckOut from "./components/ProtectedCheckOut";
 import AdminPanal from "./pages/AdminPanal";
+import Login from "./pages/Login";
 
 function App() {
   const user = useSelector((state: userStateType) => state.user);
@@ -49,8 +50,8 @@ function App() {
             </Protected>
           }
         />
-
         <Route path="/signUp" element={<SignUp />} />
+        <Route path='/signin' element={<Login/>}/>
       </Routes>
 
       <Footer />
