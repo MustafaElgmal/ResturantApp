@@ -150,7 +150,7 @@ const CheckOut = () => {
       <div className="cartt">
         <div className="div"></div>
         {itemsInCart.map((item) => (
-          <CheckOutModalItem key={item.id} item={item} onHide={()=>console.log("No hide!")} />
+          <CheckOutModalItem key={item.id} item={item} />
         ))}
         <hr />
         <div className="d-flex justify-content-center">
