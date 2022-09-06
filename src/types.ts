@@ -11,30 +11,58 @@ export interface AppProps {
   orderInCart?: ItemTypes;
 }
 
-export interface userType {
-  id?: number;
+export interface userCreate {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
   type: string;
-  imgUrl?: string;
-  dateOfBirth?: Date;
+}
+export interface userType extends userCreate{
+  id:number,
+  imgUrl:string|null,
+  dateOfBirth:Date|null,
+  orders:orderType[]|null
 }
 export interface userActionType {
   type: string;
   payload: {
-    user: userType;
+    token:string,
+    type:string,
     isLoggedIn: boolean;
   };
 }
 
 export interface userStateType {
   user: {
-    user: userType;
+    token:string;
+    type:string
     isLoggedIn: boolean;
   };
 }
+export interface type{
+  name: string;
+  description: string;
+  price: number;
+  imgUrl: string;
+  popular: boolean;
+}
+export interface itemCreate extends type{
+  categoryId:number;
+}
+export interface ItemTypes extends type {
+  id: number;
+  category: categoryType;
+  Qty?: number;
+}
+export interface itemActionType {
+  type: string;
+  payload: ItemTypes[];
+}
+export interface itemStateType {
+  item: ItemTypes[];
+}
+
 export interface categoryType {
   id: number;
   name: string;
@@ -47,23 +75,7 @@ export interface categoryActionType {
 export interface categoryStateType {
   category: categoryType[];
 }
-export interface ItemTypes {
-  id?: number;
-  name: string;
-  description: string;
-  price: number;
-  imgUrl: string;
-  popular: boolean;
-  category: categoryType;
-  Qty?: number;
-}
-export interface itemActionType {
-  type: string;
-  payload: ItemTypes[];
-}
-export interface itemStateType {
-  item: ItemTypes[];
-}
+
 
 export interface cartActionType {
   type: string;
@@ -83,7 +95,6 @@ export interface orderType {
   mobile: string;
   city: string;
   address: string;
-  user: userType;
   orderItems: orderItemType[];
   isCompleted?: boolean;
   orderNo?: string;

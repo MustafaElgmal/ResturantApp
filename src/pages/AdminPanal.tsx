@@ -1,13 +1,13 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import CreateCatogory from "../components/CreateCatogory";
 import CreateItem from "../components/CreateItem";
 import CreateUser from "../components/CreateUser";
 
 const AdminPanal = () => {
-    const [usershow, setuserShow] = useState(false);
-    const [itemshow, setitemShow] = useState(false);
-    const [catshow, setcatShow] = useState(false);
+  const [usershow, setuserShow] = useState<boolean>(false);
+  const [itemshow, setitemShow] = useState<boolean>(false);
+  const [catshow, setcatShow] = useState<boolean>(false);
   return (
     <section className="d-flex justfiy-content-between gap-4 min-vh-100 mt-5">
       <Container style={{ margin: "15%" }}>
@@ -138,9 +138,9 @@ const AdminPanal = () => {
           </Col>
         </Row>
       </Container>
-      <CreateUser show={usershow} onHide={()=>setuserShow(false)} />
-      <CreateCatogory show={catshow} onHide={()=>setcatShow(false)} />
-      <CreateItem  show={itemshow} onHide={()=>setitemShow(false)}/>
+      <CreateUser show={usershow} onHide={() => setuserShow(false)} />
+      <CreateCatogory show={catshow} onHide={() => setcatShow(false)} />
+      <CreateItem show={itemshow} onHide={() => setitemShow(false)} />
     </section>
   );
 };

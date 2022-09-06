@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import Buttons from "../components/Buttons";
 import Hero from "../components/Hero";
 import Item from "../components/Item";
-import { itemStateType } from "../types";
-import { itemFilter, updateItems } from "../utils/functions";
+import { itemStateType, userStateType } from "../types";
+import { getItems } from "../utils/apis";
+import { itemFilter } from "../utils/functions";
 
 const Home = () => {
+  const user = useSelector((state: userStateType) => state.user);
   const stateCategory = useSelector(
     (state: { stateCategory: string }) => state.stateCategory
   );
@@ -16,13 +18,13 @@ const Home = () => {
   items = itemFilter(items, stateCategory);
 
   const updateitems = async () => {
-     await updateItems(dispatch);
+    await getItems(user.token, dispatch);
   };
 
   useEffect(() => {
     updateitems();
   }, []);
-  
+
   return (
     <section className="min-vh-100">
       <Hero />

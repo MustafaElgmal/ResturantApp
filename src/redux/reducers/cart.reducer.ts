@@ -5,7 +5,6 @@ const cart = localStorage.getItem("cart");
 const initialState = cart !== null ? JSON.parse(cart) : [];
 
 const reducer = (state = initialState, action: cartActionType) => {
-  console.log(state)
   switch (action.type) {
     case "GETALLITEMSINCART":
       return action.payload;

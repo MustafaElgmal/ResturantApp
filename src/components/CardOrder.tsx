@@ -1,29 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { AppProps, orderType } from "../types";
+import { AppProps, orderType, userStateType } from "../types";
 import { Card, Row, Col, Button } from "react-bootstrap";
-import { captilize, orderColor } from "../utils/functions";
-import { getAllOrders, getOrder, updateOrder } from "../utils/apis";
-import { useDispatch } from "react-redux";
+import { captilize, orderColor, orderFinshed } from "../utils/functions";
+import { getOrder } from "../utils/apis";
+import { useDispatch, useSelector } from "react-redux";
 import Clock from "react-live-clock";
 import moment from "moment";
 
 const CardOrder = ({ orderId, bool }: AppProps) => {
+  const user = useSelector((state: userStateType) => state.user);
   const dispatch = useDispatch();
   const [order, setOrder] = useState<orderType>();
 
-  const orderFinshed = async () => {
-    const res = await updateOrder(orderId as number);
-    if (res?.status === 200) {
-      setOrder(res.data.order);
-    }
-    await getAllOrders(dispatch);
-  };
-
   const findOrder = async () => {
-    const res = await getOrder(orderId as number);
-    if (res?.status === 200) {
-      setOrder(res.data.order);
-    }
+    await getOrder(orderId!, user.token, setOrder);
   };
 
   useEffect(() => {
@@ -44,10 +34,16 @@ const CardOrder = ({ orderId, bool }: AppProps) => {
                 format={"H:mm:ss"}
                 ticking={true}
                 timezone={"Africa/Cairo"}
-                date={orderColor(order as orderType, bool as boolean).time - 7200000}
+                date={
+                  orderColor(order as orderType, bool as boolean).time - 7200000
+                }
               />
             ) : (
-              <p style={{margin:'0px'}}>{moment(order?.updatedAt?.toString()).format("DD MM YY HH:mm:ss")}</p>
+              <p style={{ margin: "0px" }}>
+                {moment(order?.updatedAt?.toString()).format(
+                  "DD MM YY HH:mm:ss"
+                )}
+              </p>
             )}
           </Card.Header>
           <Card.Body>
@@ -77,7 +73,9 @@ const CardOrder = ({ orderId, bool }: AppProps) => {
                     backgroundColor: "#303030",
                     borderColor: "#303030",
                   }}
-                  onClick={() => orderFinshed()}
+                  onClick={() =>
+                    orderFinshed(orderId!, setOrder, dispatch, user.token)
+                  }
                 >
                   Done
                 </Button>

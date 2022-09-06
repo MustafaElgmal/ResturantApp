@@ -21,13 +21,7 @@ const CreateUser = ({ show, onHide }: AppProps) => {
       password: Yup.string().required("Please Enter your password"),
     }),
     onSubmit: async (values) => {
-      const res = await createUser(values);
-      if (res.status !== 201) {
-        if (res.status === 500) alert(res.error);
-        else alert(res.message);
-      } else {
-        alert(`${values.type} is created!`);
-      }
+       await createUser(values);
       onHide && onHide();
       formik.resetForm();
     },

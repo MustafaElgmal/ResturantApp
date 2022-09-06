@@ -1,26 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllCategories } from "../redux/actions/categories";
 import { getStateCategory } from "../redux/actions/stateCategory";
-import { categoryStateType } from "../types";
+import { categoryStateType, userStateType } from "../types";
 import { getCategories } from "../utils/apis";
 
 const Buttons = () => {
+  const user = useSelector((state: userStateType) => state.user);
   const categories = useSelector((state: categoryStateType) => state.category);
   const stateCategory = useSelector(
     (state: { stateCategory: string }) => state.stateCategory
   );
   const dispatch = useDispatch();
   const updateCategories = async () => {
-    const res = await getCategories();
-    dispatch(getAllCategories(res?.data.categories));
+    await getCategories(dispatch, user.token);
   };
   useEffect(() => {
     updateCategories();
   }, []);
   return (
-    <section className="d-flex flex-wrap justify-content-center gap-2 mt-5" id="menu">
+    <section
+      className="d-flex flex-wrap justify-content-center gap-2 mt-5"
+      id="menu"
+    >
       <Button
         style={
           stateCategory === "popular"

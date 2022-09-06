@@ -8,19 +8,18 @@ import {
   ItemTypes,
   orderItemType,
   userStateType,
-  userType,
 } from "../types";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { createOrder, getAllOrders } from "../utils/apis";
-import { getAllItemsInCart } from "../redux/actions/cart";
+import { createOrder, getAllOrders, getUser } from "../utils/apis";
 
 const CheckOut = () => {
+  const [name, setName] = useState<string>();
+  let [total, setTotal] = useState<number>(0);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const itemsInCart = useSelector((state: cartStateType) => state.cart);
   const user = useSelector((state: userStateType) => state.user);
-  const name = `${user.user.firstName} ${user.user.lastName}`;
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
   const formik = useFormik({
@@ -39,27 +38,28 @@ const CheckOut = () => {
       address: Yup.string().required("Address is required!"),
     }),
     onSubmit: async (values) => {
-      let orderItems: orderItemType[]=[];
+      let orderItems: orderItemType[] = [];
       itemsInCart.forEach((item: ItemTypes) => {
-        orderItems.push({Qty: item.Qty as number,item});
+        orderItems.push({ Qty: item.Qty as number, item });
       });
-      const order = { ...values, user: user.user as userType,orderItems};
-      const orderNo=await createOrder(order, dispatch);
-      await getAllOrders(dispatch);
-      dispatch(getAllItemsInCart([]));
-      localStorage.removeItem("cart");
+      const order = { ...values, orderItems };
+      await createOrder(order, dispatch, user.token, navigate);
+      await getAllOrders(dispatch,user.token);
       formik.resetForm();
-      navigate(`/orderSuccess/${orderNo}`);
     },
   });
-  let [total, setTotal] = useState(0);
+  const upadateUser = async () => {
+    await getUser(user.token,setName);
+  };
+
   useEffect(() => {
     let sum = 0;
-    itemsInCart.forEach(
-      (item) => (sum += (item?.price) * (item?.Qty as number))
-    );
+    itemsInCart.forEach((item) => (sum += item?.price * (item?.Qty as number)));
     setTotal(sum);
   }, [itemsInCart]);
+  useEffect(() => {
+    upadateUser();
+  }, []);
 
   return (
     <Container className="d-flex justify-content-between min-vh-100 mt-5 flex-wrap-reverse">
@@ -75,7 +75,7 @@ const CheckOut = () => {
                     className="form-control"
                     name="name"
                     style={{ border: "none", borderBottom: "1px solid gray" }}
-                    value={name}
+                    value={`${name}`}
                     disabled
                   />
                 </div>

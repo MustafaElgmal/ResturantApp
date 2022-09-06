@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { AppProps, cartStateType, ItemTypes } from "../types";
+import { AppProps, cartStateType } from "../types";
 import { Image, Col, Row } from "react-bootstrap";
-import { captilize, editCart } from "../utils/functions";
+import { captilize, editCartOutsideForm } from "../utils/functions";
 import plus from "../assets/add.png";
 import minus from "../assets/minus.png";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllItemsInCart } from "../redux/actions/cart";
 
 const Item = ({ item }: AppProps) => {
   const name = captilize(item?.name as string);
@@ -13,11 +12,6 @@ const Item = ({ item }: AppProps) => {
   const dispatch = useDispatch();
   let [count, setCount] = useState(0);
   let itemsInCart = useSelector((state: cartStateType) => state.cart);
-  const editcart = (num: number) => {
-    const result = editCart(num, count, itemsInCart, item as ItemTypes);
-    setCount(result.count);
-    dispatch(getAllItemsInCart(result.itemsInCart));
-  };
 
   useEffect(() => {
     const itemFind = itemsInCart.find((itemm) => itemm?.id === item?.id);
@@ -27,6 +21,7 @@ const Item = ({ item }: AppProps) => {
       setCount(0);
     }
   }, [itemsInCart]);
+
   return (
     <Col>
       <Row>
@@ -38,7 +33,21 @@ const Item = ({ item }: AppProps) => {
           <p>{description}</p>
           <h6>Price:LE {item?.price}</h6>
           <div className="d-flex justfiy-content-between align-items-center gap-3 mt-2">
-            <Image src={minus} width="6%" onClick={() => editcart(-1)}  style={{cursor:'pointer'}}/>
+            <Image
+              src={minus}
+              width="6%"
+              onClick={() =>
+                editCartOutsideForm(
+                  -1,
+                  count,
+                  itemsInCart,
+                  item!,
+                  setCount,
+                  dispatch
+                )
+              }
+              style={{ cursor: "pointer" }}
+            />
 
             <span
               className="rounded"
@@ -51,7 +60,21 @@ const Item = ({ item }: AppProps) => {
             >
               {count}
             </span>
-            <Image src={plus} width="6%" onClick={() => editcart(1)} style={{cursor:'pointer'}} />
+            <Image
+              src={plus}
+              width="6%"
+              onClick={() =>
+                editCartOutsideForm(
+                  1,
+                  count,
+                  itemsInCart,
+                  item!,
+                  setCount,
+                  dispatch
+                )
+              }
+              style={{ cursor: "pointer" }}
+            />
           </div>
         </Col>
       </Row>

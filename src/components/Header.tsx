@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Navbar, Container, Image, Button, Nav } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/image.png";
 import navigation from "../assets/fast-delivery (1).png";
 import CheckOutModal from "./CheckOutModal";
@@ -13,7 +13,8 @@ import { MDBBadge } from "mdb-react-ui-kit";
 import { removeAllItemsInCart } from "../redux/actions/cart";
 
 const Header = () => {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState<boolean>(false);
+  const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state: userStateType) => state.user);
@@ -21,17 +22,15 @@ const Header = () => {
   const logoutUser = () => {
     dispatch(logout());
     localStorage.removeItem("user");
-    dispatch(removeAllItemsInCart())
-    localStorage.removeItem("cart")
+    dispatch(removeAllItemsInCart());
+    localStorage.removeItem("cart");
     dispatch(getStateCategory("popular"));
     navigate("/");
   };
-
   return (
     <Navbar
       className="fixed-top navbar navbar-dark"
-      style={{ backgroundColor: "#303030" }}
-      expand="lg"
+      style={{ backgroundColor: "#303030",height:'80px' }}
     >
       <Container>
         <Navbar.Brand>
@@ -47,48 +46,49 @@ const Header = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto ps-2">
-            {user.user.type === "user" && user.isLoggedIn ? (
+            {user.type === "user" && user.isLoggedIn ? (
               <>
-                
-                  <Scroll.Link
-                    activeClass="active"
-                    to="menu"
-                    spy={true}
-                    smooth={true}
-                    offset={-70}
-                    duration={500}
-                    style={{
-                      textDecoration: "none",
-                      color: "white",
-                      cursor: "pointer",
-                    }}
-                    className="pt-2"
-                  >
-                    Menu
-                  </Scroll.Link>
-                
-
-                  <Scroll.Link
-                    activeClass="active"
-                    to="menu"
-                    spy={true}
-                    smooth={true}
-                    offset={-70}
-                    duration={500}
-                    style={{
-                      textDecoration: "none",
-                      color: "white",
-                      cursor: "pointer",
-                    }}
-                    className="pt-2"
-                    onClick={() => dispatch(getStateCategory("popular"))}
-                  >
-                    Most Popular
-                  </Scroll.Link>
-                
+                {location.pathname === "/" ? (
+                  <>
+                    {" "}
+                    <Scroll.Link
+                      activeClass="active"
+                      to="menu"
+                      spy={true}
+                      smooth={true}
+                      offset={-70}
+                      duration={500}
+                      style={{
+                        textDecoration: "none",
+                        color: "white",
+                        cursor: "pointer",
+                      }}
+                      className="pt-2"
+                    >
+                      Menu
+                    </Scroll.Link>
+                    <Scroll.Link
+                      activeClass="active"
+                      to="menu"
+                      spy={true}
+                      smooth={true}
+                      offset={-70}
+                      duration={500}
+                      style={{
+                        textDecoration: "none",
+                        color: "white",
+                        cursor: "pointer",
+                      }}
+                      className="pt-2"
+                      onClick={() => dispatch(getStateCategory("popular"))}
+                    >
+                      Most Popular
+                    </Scroll.Link>
+                  </>
+                ) : null}
 
                 <div className="mt-2">
-                <Image
+                  <Image
                     src={navigation}
                     style={{ width: "20px", cursor: "pointer" }}
                     onClick={() =>
@@ -100,9 +100,7 @@ const Header = () => {
                       {itemsInCart.length}
                     </MDBBadge>
                   ) : null}
-
                 </div>
-                 
               </>
             ) : null}
 
@@ -126,6 +124,5 @@ const Header = () => {
     </Navbar>
   );
 };
-
 
 export default Header;

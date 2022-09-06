@@ -4,9 +4,7 @@ import * as Yup from "yup";
 import { Button, Image } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import piza from "../assets/200120161356-cnn-worlds-best-new-restaurants---madera---simon-brown-photography-1-1.jpg";
-import { userType } from "../types";
 import { useDispatch } from "react-redux";
-import { login } from "../redux/actions/user.action";
 import { loginUser } from "../utils/apis";
 
 const Login = () => {
@@ -15,44 +13,27 @@ const Login = () => {
   const formik = useFormik({
     initialValues: {
       email: "",
-      password: ""
+      password: "",
     },
     validationSchema: Yup.object({
       email: Yup.string().email().required("Please Enter your Email"),
       password: Yup.string().required("Please Enter your password"),
     }),
     onSubmit: async (values) => {
-      const res = await loginUser(values);
-      if (res.status !== 200) {
-        if (res.status === 500) alert(res.error);
-        else alert(res.message);
-      } else {
-        const user = res.user;
-        if (user) {
-          dispatch(login(user));
-          localStorage.setItem(
-            "user",
-            JSON.stringify({ user, isLoggedIn: true })
-          );
-          formik.resetForm();
-          navigate("/");
-        }
-      }
-
+      await loginUser(values, dispatch, navigate);
       formik.resetForm();
     },
   });
   return (
-    <section className="mt-5 min-vh-100">
+    <section className="min-vh-100 sec">
       <div className="container h-100 ">
-        <div className="row d-flex justify-content-center align-items-center h-100">
         <div className="div"></div>
+        <div className="row d-flex justify-content-center align-items-center">
           <div className="col-lg-12 col-xl-11">
             <div
               className="card text-black mt-4"
               style={{ borderRadius: "25px" }}
             >
-              
               <div className="card-body p-md-5">
                 <div className="row justify-content-center">
                   <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">

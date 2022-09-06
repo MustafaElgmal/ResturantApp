@@ -9,7 +9,7 @@ import CheckOutModalItem from "./CheckOutModalItem";
 const CheckOutModal = ({ show, onHide }: AppProps) => {
   const itemsInCart = useSelector((state: cartStateType) => state.cart);
 
-  let [total, setTotal] = useState(0);
+  let [total, setTotal] = useState<number>(0);
 
   const setTotalMoneyOfCart = () => {
     let sum = 0;

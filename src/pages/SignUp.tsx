@@ -4,10 +4,9 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import piza from "../assets/200120161356-cnn-worlds-best-new-restaurants---madera---simon-brown-photography-1-1.jpg";
-import { createUser } from "../utils/apis";
-import { userType } from "../types";
+import { signUpUser } from "../utils/apis";
+import { userCreate } from "../types";
 import { useDispatch } from "react-redux";
-import { login } from "../redux/actions/user.action";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -27,31 +26,15 @@ const SignUp = () => {
       email: Yup.string().email().required("Please Enter your Email"),
       password: Yup.string().required("Please Enter your password"),
     }),
-    onSubmit: async (values: userType) => {
-      const res = await createUser(values);
-      if (res.status !== 201) {
-        if (res.status === 500) alert(res.error);
-        else alert(res.message);
-      } else {
-        const user = res.user;
-        if (user) {
-          dispatch(login(user));
-          localStorage.setItem(
-            "user",
-            JSON.stringify({ user, isLoggedIn: true })
-          );
-          formik.resetForm();
-          navigate("/");
-        }
-      }
+    onSubmit: async (values: userCreate) => {
+      await signUpUser(values, dispatch, navigate);
       formik.resetForm();
     },
   });
   return (
-    <section className="mt-5 min-vh-100">
+    <section className="min-vh-100 sec">
       <div className="container h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
-        <div className="div"></div>
           <div className="col-lg-12 col-xl-11">
             <div
               className="card text-black mt-4"

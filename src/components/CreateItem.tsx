@@ -1,13 +1,18 @@
 import { useFormik } from "formik";
 import React, { useEffect } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
-import { AppProps, categoryStateType, categoryType, ItemTypes } from "../types";
+import {
+  AppProps,
+  categoryStateType,
+  categoryType,
+  userStateType,
+} from "../types";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { createItem, getCategories } from "../utils/apis";
-import { getAllCategories } from "../redux/actions/categories";
 
 const CreateItem = ({ show, onHide }: AppProps) => {
+  const user = useSelector((state: userStateType) => state.user);
   const categories = useSelector((state: categoryStateType) => state.category);
   const dispatch = useDispatch();
   const formik = useFormik({
@@ -16,41 +21,31 @@ const CreateItem = ({ show, onHide }: AppProps) => {
       description: "",
       price: "",
       popular: "",
-      imgUrl: "https://review2020.s3.amazonaws.com/Tawwr/%E2%80%94Pngtree%E2%80%94seafood+pizza+with+cheese_4942142.png",
+      imgUrl:
+        "https://review2020.s3.amazonaws.com/Tawwr/%E2%80%94Pngtree%E2%80%94seafood+pizza+with+cheese_4942142.png",
       categoryId: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please Enter name of Item!"),
       description: Yup.string().required("Please Enter description of Item!"),
-      price: Yup.number().required("Please Enter price of Item!"),
+      price: Yup.string().required("Please Enter price of Item!"),
       popular: Yup.string().required("Please select popular of Item!"),
       categoryId: Yup.number().required("Please select category of Item!"),
     }),
     onSubmit: async (values) => {
       const item = {
-          name: values.name,
-          description: values.description,
-          price: parseInt(values.price as string),
-          imgUrl: values.imgUrl,
-          popular: Boolean(values.popular),
-          category:{
-            id:parseInt(values.categoryId as string),
-            name:""
-          }
+        ...values,
+        popular: values.popular === "true" ? true : false,
+        categoryId: +values.categoryId,
+        price: +values.price,
       };
-
-      const res = await createItem(item);
-      if (res?.status === 201) {
-        alert("Item is created!");
-      }
-
+      await createItem(item, user.token);
       onHide && onHide();
       formik.resetForm();
     },
   });
   const updateCategories = async () => {
-    const res = await getCategories();
-    dispatch(getAllCategories(res?.data.categories));
+    await getCategories(dispatch, user.token);
   };
 
   useEffect(() => {

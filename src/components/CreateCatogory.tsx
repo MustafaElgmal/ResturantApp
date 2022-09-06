@@ -1,11 +1,13 @@
 import { useFormik } from "formik";
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
-import { AppProps } from "../types";
+import { AppProps, userStateType } from "../types";
 import * as Yup from "yup";
 import { createCategory } from "../utils/apis";
+import { useSelector } from "react-redux";
 
 const CreateCatogory = ({ show, onHide }: AppProps) => {
+  const user = useSelector((state: userStateType) => state.user);
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -14,12 +16,7 @@ const CreateCatogory = ({ show, onHide }: AppProps) => {
       name: Yup.string().required("Please Enter CategoryName!"),
     }),
     onSubmit: async (values) => {
-      console.log(values)
-      const res = await createCategory(values);
-      if (res?.status === 201) {
-        alert("Category is created!");
-      }
-
+      await createCategory(values, user.token);
       onHide && onHide();
       formik.resetForm();
     },

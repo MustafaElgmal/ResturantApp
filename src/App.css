@@ -28,6 +28,20 @@
   border-left: 3px  solid  gray ;
   width:25%;
 }
+.sec{
+  height: calc(100vh - 80px);
+  overflow: auto;
+  background: "#F3F4F6"
+}
+
+.imageBack{
+  background-image: url("./assets/200120161356-cnn-worlds-best-new-restaurants---madera---simon-brown-photography-1-1.jpg");
+  background-position: center;
+  background-size: cover;
+  height: calc(100vh - 60px);
+  width: 100%;
+
+}
 
 @media screen and (max-width:550px) {
   .mg{

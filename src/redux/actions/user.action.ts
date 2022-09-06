@@ -1,10 +1,9 @@
-import { userType } from "../../types";
-
-export const login = (user: userType) => {
+export const login = (token: string,type:string) => {
   return {
     type: "LOGIN",
     payload: {
-      user: user,
+      token,
+      type,
       isLoggedIn: true,
     },
   };
@@ -14,7 +13,8 @@ export const logout = () => {
   return {
     type: "LOGOUT",
     payload: {
-      user: {},
+      token: "",
+      type:"",
       isLoggedIn: false,
     },
   };

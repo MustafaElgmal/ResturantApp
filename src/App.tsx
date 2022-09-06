@@ -24,11 +24,16 @@ function App() {
           path="/"
           element={
             <Protected>
-              {user.user.type === "user" ? <Home />:user.user.type==='admin'?<AdminPanal />:<DashBord />}
+              {user.type === "user" ? (
+                <Home />
+              ) : user.type === "admin" ? (
+                <AdminPanal />
+              ) : (
+                <DashBord />
+              )}
             </Protected>
           }
         />
-        
 
         <Route
           path="/checkOut"
@@ -40,7 +45,7 @@ function App() {
             </Protected>
           }
         />
-        
+
         <Route
           path="/orderSuccess/:orderNo"
           element={
@@ -51,8 +56,7 @@ function App() {
         />
         <Route path="/signUp" element={<SignUp />} />
       </Routes>
-
-      <Footer />
+      {user.isLoggedIn?<Footer />:null}
     </div>
   );
 }
