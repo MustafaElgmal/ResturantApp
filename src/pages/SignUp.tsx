@@ -130,6 +130,7 @@ const SignUp = () => {
 
                       <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                         <Button
+                         
                           style={{
                             backgroundColor: "#FF9200",
                             borderColor: "#FF9200",
