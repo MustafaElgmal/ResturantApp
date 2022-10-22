@@ -11,7 +11,7 @@ import { getAllItems } from "../redux/actions/items";
 import { getAllItemsInCart } from "../redux/actions/cart";
 import { getAllCategories } from "../redux/actions/categories";
 
-const baseUrl = "https://resturantapp1234.herokuapp.com";
+const baseUrl = "https://resturantapis-production.up.railway.app";
 
 export const signUpUser = async (
   user: userCreate,
