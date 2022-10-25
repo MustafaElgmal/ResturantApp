@@ -34,6 +34,7 @@ const SignUp = () => {
   return (
     <section className="min-vh-100 sec">
       <div className="container h-100">
+      <div className="div"></div>
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-lg-12 col-xl-11">
             <div

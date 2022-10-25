@@ -45,7 +45,7 @@ const Header = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto ps-2">
+          <Nav className="ms-auto ps-2 gap-3">
             {user.type === "user" && user.isLoggedIn ? (
               <>
                 {location.pathname === "/" ? (
