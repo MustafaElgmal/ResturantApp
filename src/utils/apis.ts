@@ -11,7 +11,7 @@ import { getAllItems } from "../redux/actions/items";
 import { getAllItemsInCart } from "../redux/actions/cart";
 import { getAllCategories } from "../redux/actions/categories";
 
-const baseUrl = "https://resturantapis-production.up.railway.app";
+const baseUrl = "https://resturant-apis.onrender.com";
 
 export const signUpUser = async (
   user: userCreate,
